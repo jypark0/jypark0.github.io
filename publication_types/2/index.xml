@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Jung Yeon Park on Jung Yeon Park</title>
-    <link>https://jypark0.github.io/</link>
-    <description>Recent content in Jung Yeon Park on Jung Yeon Park</description>
+    <title>2 on Jung Yeon Park</title>
+    <link>https://jypark0.github.io/publication_types/2/</link>
+    <description>Recent content in 2 on Jung Yeon Park</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2018</copyright>
-    <lastBuildDate>Wed, 20 Apr 2016 00:00:00 +0900</lastBuildDate>
-    <atom:link href="/" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 15 Sep 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://jypark0.github.io/publication_types/2/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>Models of Clustered Photolithography Tools for Fab-Level Simulation: From Affine to Flow Line</title>
@@ -25,15 +27,6 @@
       <pubDate>Fri, 21 Oct 2016 00:00:00 +0000</pubDate>
       
       <guid>https://jypark0.github.io/publication/2016-j2/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Equipment Models of Clustered Photolithography Tools for Fab-Level Simulation</title>
-      <link>https://jypark0.github.io/publication/2015-ismi/</link>
-      <pubDate>Sat, 17 Oct 2015 00:00:00 +0000</pubDate>
-      
-      <guid>https://jypark0.github.io/publication/2015-ismi/</guid>
       <description></description>
     </item>
     
