@@ -11,6 +11,180 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Kubernetes</title>
+      <link>https://jypark0.github.io/project/kubernetes/</link>
+      <pubDate>Sun, 29 Jul 2018 15:41:26 +0900</pubDate>
+      
+      <guid>https://jypark0.github.io/project/kubernetes/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://kubernetes.io/&#34; target=&#34;_blank&#34;&gt;Kubernetes&lt;/a&gt; is a container orchestration platform, designed to run containerized workloads in production. Originally, an internal project at Google, Kubernetes (k8s) was donated to &lt;a href=&#34;https://www.cncf.io/&#34; target=&#34;_blank&#34;&gt;CNCF&lt;/a&gt; in 2014 and has since become one of the most popular platforms for running containers.&lt;/p&gt;
+
+&lt;p&gt;Real applications often consist of multiple containers, spread across multiple nodes. Kubernetes gives you a way to manage these containers and deploy them to the end users. Some of its features include:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Automatic binpacking: automatically places containers across nodes based on resource requirements and constraints&lt;/li&gt;
+&lt;li&gt;Horizontal scaling: easily create/delete multiple replicas of an application&lt;/li&gt;
+&lt;li&gt;Self healing: restarts containers that fail, container health checking&lt;/li&gt;
+&lt;li&gt;Service discovery and load balancing: groups application containers with a DNS name and load balances requests among them.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Some helpful resources:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://kubernetes.io/docs/home/&#34; target=&#34;_blank&#34;&gt;Kubernetes documentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://kubernetes.io/docs/tutorials/&#34; target=&#34;_blank&#34;&gt;Kubernetes tutorials&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://kubernetesbyexample.com/&#34; target=&#34;_blank&#34;&gt;Kubernetes By Example&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.edx.org/course/introduction-to-kubernetes&#34; target=&#34;_blank&#34;&gt;edX: Introduction to Kubernetes&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/kelseyhightower/kubernetes-the-hard-way&#34; target=&#34;_blank&#34;&gt;Kubernetes the hard way&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://techbeacon.com/top-tutorials-mastering-kubernetes&#34; target=&#34;_blank&#34;&gt;47 advanced tutorials for mastering Kubernetes&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I started to learn about Kubernetes around six months ago, starting with the &lt;a href=&#34;https://www.edx.org/course/introduction-to-kubernetes&#34; target=&#34;_blank&#34;&gt;edX course&lt;/a&gt;.
+Over several months, I&amp;rsquo;ve been working on how to install Kubernetes in a disconnected (no Internet) environment. I&amp;rsquo;ve also focused on how to integrate other technologies with k8s, such as storage, package management, logging, monitoring and so on, for a complete container platform.&lt;/p&gt;
+
+&lt;p&gt;I will start posting about my experience with Kubernetes so far. I will mostly focus on how to install various things with an air-gapped installation.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Setting up Minikube with corporate proxy</title>
+      <link>https://jypark0.github.io/post/2018-minikube/</link>
+      <pubDate>Sun, 29 Jul 2018 15:36:23 +0900</pubDate>
+      
+      <guid>https://jypark0.github.io/post/2018-minikube/</guid>
+      <description>
+
+&lt;p&gt;&lt;a href=&#34;https://kubernetes.io/docs/setup/minikube/&#34; target=&#34;_blank&#34;&gt;Minikube&lt;/a&gt; is an easy way to get started with Kubernetes. It runs as a single-node Kubernetes cluster inside a VM, and includes almost all features of k8s, so you can try them out before installing them to an actual cluster.&lt;/p&gt;
+
+&lt;p&gt;Supported addons include:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Kubernetes dashboard&lt;/li&gt;
+&lt;li&gt;EFK&lt;/li&gt;
+&lt;li&gt;Registry&lt;/li&gt;
+&lt;li&gt;Ingress
+and so on.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;(see &lt;a href=&#34;https://github.com/kubernetes/minikube/blob/master/docs/addons.md&#34; target=&#34;_blank&#34;&gt;https://github.com/kubernetes/minikube/blob/master/docs/addons.md&lt;/a&gt;)&lt;/p&gt;
+
+&lt;p&gt;Minikube creates a VM that includes Kubernetes and a Docker daemon. To use containers inside this VM, you need to pass on the proxy settings to the docker daemon and install the certificate as well.&lt;/p&gt;
+
+&lt;p&gt;This post focuses on using Minikube with a corporate proxy and certificate. I tested this several months ago so the exact commands may be slightly different; the overall flow should be the same.&lt;/p&gt;
+
+&lt;p&gt;I created an Ubuntu host and installed minikube there. I needed to setup proxy settings for the host, and then configure proxy and certificates inside the minikube VM.&lt;/p&gt;
+
+&lt;h3 id=&#34;1-host-proxy-settings&#34;&gt;1. Host proxy settings&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Used Ubuntu 16.04 with Desktop&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Set proxy system-wide&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;System Settings -&amp;gt; Network Settings&lt;/li&gt;
+&lt;li&gt;Enter &lt;proxy-ip&gt;:&lt;port&gt;&lt;/li&gt;
+&lt;li&gt;May need to add https proxy as well
+&lt;img src=&#34;https://jypark0.github.io/img/posts/minikube1.png&#34; alt=&#34;Ubuntu Proxy&#34; /&gt;&lt;/li&gt;
+&lt;li&gt;Click apply system-wide&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Set up no-proxy settings&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Used dconf-editor (may need to install &lt;code&gt;apt install dconf-editor&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;Go to System -&amp;gt; Proxy&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Add line to &lt;code&gt;ignore-hosts&lt;/code&gt;:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;[&#39;localhost&#39;,&#39;127.0.0.1/8&#39;,&#39;::1&#39;,&#39;192.168.99.100&#39;]&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;192.168.99.100&lt;/code&gt; is the default IP for minikube&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Here I edited the Ubuntu host proxy settings. We add the no-proxy setting to access minikube later on.
+You can probably edit &lt;code&gt;/etc/environment&lt;/code&gt; for the same effect.&lt;/p&gt;
+
+&lt;h3 id=&#34;2-update-certificates-on-host&#34;&gt;2. Update certificates on host&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Make a new directory under &lt;code&gt;/usr/share/ca-certificates&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo mkdir -p /usr/share/ca-certificates/temp
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Copy your certificate to the new directory&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo cp client.crt /usr/share/ca-certificates/temp/
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Update certificates&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo update-ca-certificates
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;3-start-minikube&#34;&gt;3. Start Minikube&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Assume virtualbox, kubectl, minikube is installed
+
+&lt;ul&gt;
+&lt;li&gt;When installing, you may need to pass proxy settings to &lt;code&gt;curl&lt;/code&gt;. Create a &lt;code&gt;.curlrc&lt;/code&gt; file if needed&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Pass proxy settings to docker daemon when starting minikube&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;minikube start --docker-env HTTP_PROXY=&amp;lt;proxy&amp;gt; --docker-env HTTPS_PROXY=&amp;lt;proxy&amp;gt; --docker-env NO_PROXY=localhost,127.0.0.1,::1,192.168.99.100 --insecure-registry gcr.io, index.docker.io
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;I had to pass the &lt;code&gt;--insecure-registry&lt;/code&gt; parameter to download images correctly. Add any other registries as needed.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;After minikube has started, check that the docker options have been passed correctly&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;minikube ssh -- systemctl show --property=Environment docker --no-pager
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;4-pass-the-certificate-to-the-minikube-vm&#34;&gt;4. Pass the certificate to the Minikube VM&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;To properly download images without certificate warnings inside Minikube, you need to copy the certificate to the VM inside Minkube.&lt;/li&gt;
+&lt;li&gt;Copy certificate contents&lt;/li&gt;
+&lt;li&gt;SSH into Minikube &lt;code&gt;minikube ssh&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Append certificate contents to &lt;code&gt;ca-certificates.crt&lt;/code&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Restart docker&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo systemctl restart docker
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;I created a script &lt;code&gt;copy-crt.sh&lt;/code&gt; to do this easily outside the Minikube VM&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;#!/usr/bin/env bash
+CRT=$(&amp;lt; /usr/share/ca-certificates/temp/client.crt)
+
+minikube ssh &amp;lt;&amp;lt; EOF
+
+echo -e &amp;quot;$CRT&amp;quot; | sudo tee -a /etc/ssl/certs/ca-certificates.crt
+
+sudo systemctl restart docker
+
+exit
+
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;The certificate needs to be copied everytime minikube is restarted.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Now you can download images and create applications to test Kubernetes features.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Models of Clustered Photolithography Tools for Fab-Level Simulation: From Affine to Flow Line</title>
       <link>https://jypark0.github.io/publication/2017-j1/</link>
       <pubDate>Fri, 15 Sep 2017 00:00:00 +0000</pubDate>
@@ -30,10 +204,10 @@
     
     <item>
       <title>Equipment Models of Clustered Photolithography Tools for Fab-Level Simulation</title>
-      <link>https://jypark0.github.io/publication/2015-ismi/</link>
+      <link>https://jypark0.github.io/talk/2015-ismi/</link>
       <pubDate>Sat, 17 Oct 2015 00:00:00 +0000</pubDate>
       
-      <guid>https://jypark0.github.io/publication/2015-ismi/</guid>
+      <guid>https://jypark0.github.io/talk/2015-ismi/</guid>
       <description></description>
     </item>
     

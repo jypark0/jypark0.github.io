@@ -163,6 +163,25 @@
         
 
         <li class="nav-item">
+          <a href="/#talks" data-target="#talks">
+            
+            <span>Talks</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+        
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
           <a href="/#posts" data-target="#posts">
             
             <span>Posts</span>
@@ -475,46 +494,68 @@
 
       
     
+
+  </div>
+</div>
+
+    </div>
+  </section>
+  
+
+  
+  
+  
+  <section id="talks" class="home-section">
+    <div class="container">
       
-        <div class="pub-list-item" style="margin-bottom: 1rem" itemscope itemtype="http://schema.org/CreativeWork">
-  <i class="fa fa-file-text-o pub-icon" aria-hidden="true"></i>
-  <span itemprop="author">
-    Jung Yeon Park, James R. Morrison, Kyungsu Park</span>.
-  <a href="https://jypark0.github.io/publication/2015-ismi/" itemprop="name">Equipment Models of Clustered Photolithography Tools for Fab-Level Simulation</a>.
-  ISMI, KAIST, Daejeon, South Korea,
-  2015.
-  <p>
 
 
 
 
-<a class="btn btn-primary btn-outline btn-xs" href="https://jypark0.github.io/pdf/2015-ISMI-abstract.pdf" target="_blank" rel="noopener">
-  PDF
-</a>
+<div class="row">
+  <div class="col-xs-12 col-md-4 section-heading">
+    <h1>Recent Talks</h1>
+    
+    
+  </div>
+  <div class="col-xs-12 col-md-8">
+    
+
+    
+      
+        <div class="pub-list-item" style="margin-bottom: 1rem" itemscope itemtype="http://schema.org/Event">
+  <i class="fa fa-calendar pub-icon" aria-hidden="true"></i>
+  <span itemprop="name"><a href="https://jypark0.github.io/talk/2015-ismi/">Equipment Models of Clustered Photolithography Tools for Fab-Level Simulation</a></span>
+  <div itemprop="startDate">
+    
+    Oct 17, 2015
+    
+  </div>
+  <div class="talk-metadata">
+    
+            International Symposium on Semiconductor Manufacturing Intelligence
+    
+  </div>
+  <div class="talk-links">
+    
 
 
 
 
-
-
-
-
-
-
-
-<a class="btn btn-primary btn-outline btn-xs" href="https://jypark0.github.io/pdf/2015-ISMI-slides.pdf" target="_blank" rel="noopener">
+<a class="btn btn-primary btn-outline btn-xs" href="https://jypark0.github.io/pdf/2015-ISMI-slides.pdf">
   Slides
 </a>
 
 
 
 
-</p>
+
+
+  </div>
 </div>
 
       
     
-
   </div>
 </div>
 
@@ -548,6 +589,95 @@
       
 
       
+      
+
+        
+
+        
+        
+
+        
+        
+
+      
+      
+        
+        
+          
+
+<div class="card-simple" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
+  
+
+<div class="article-metadata">
+
+  
+
+  <span class="article-date">
+    
+    <meta content="2018-07-29 15:36:23 &#43;0900 KST" itemprop="datePublished">
+    <time datetime="2018-07-29 15:36:23 &#43;0900 KST" itemprop="dateModified">
+      Jul 29, 2018
+    </time>
+  </span>
+  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Jung Yeon Park">
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    3 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fa fa-folder"></i>
+    
+    <a href="https://jypark0.github.io/categories/minikube/">minikube</a
+    >, 
+    
+    <a href="https://jypark0.github.io/categories/proxy/">proxy</a
+    >
+    
+  </span>
+  
+  
+
+  
+
+</div>
+
+
+  
+  
+  <h3 class="article-title" itemprop="headline">
+    <a href="https://jypark0.github.io/post/2018-minikube/" itemprop="url">Setting up Minikube with corporate proxy</a>
+  </h3>
+  <div class="article-style" itemprop="articleBody">
+    
+    Minikube is an easy way to get started with Kubernetes. It runs as a single-node Kubernetes cluster inside a VM, and includes almost all features of k8s, so you can try them out before installing them to an actual cluster.
+Supported addons include:
+ Kubernetes dashboard EFK Registry Ingress and so on.  (see https://github.com/kubernetes/minikube/blob/master/docs/addons.md)
+Minikube creates a VM that includes Kubernetes and a Docker daemon. To use containers inside this VM, you need to pass on the proxy settings to the docker daemon and install the certificate as well.
+    
+  </div>
+  <p class="read-more" itemprop="mainEntityOfPage">
+    <a href="https://jypark0.github.io/post/2018-minikube/" class="btn btn-primary btn-outline">
+      CONTINUE READING
+    </a>
+  </p>
+</div>
+
+        
+      
+
       
     
 
@@ -584,6 +714,26 @@
 
     <div class="row isotope projects-container js-layout-masonry">
 
+      
+      
+      
+      
+      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-6 project-item isotope-item kubernetes k8s minikube">
+        <div class="card">
+          
+          <a href="https://jypark0.github.io/project/kubernetes/" title="" class="card-image hover-overlay"
+             >
+            <img src="/img/kubernetes.png" alt="" class="img-responsive">
+          </a>
+          
+          <div class="card-text">
+            <h4><a href="https://jypark0.github.io/project/kubernetes/" >Kubernetes</a></h4>
+            <div class="card-desription">
+              <p>My experience with Kubernetes</p>
+            </div>
+          </div>
+        </div>
+      </div>
       
 
     </div>
