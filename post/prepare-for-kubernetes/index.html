@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme" content="hugo-academic">
+  <meta name="generator" content="Hugo 0.45.1" />
+  <meta name="author" content="Jung Yeon Park">
+
+  
+  
+  
+  
+    
+  
+  <meta name="description" content="This is the first of three posts will focus on how to bring up a kubeadm cluster in an offline environment. I completed this a couple of months ago, when the latest k8s version was 1.9, but the concepts should translate over to newer versions.
+ Prepare for kubernetes (*) Download required files on an Internet connected computer Initialize Kubeadm  Kubeadm is one of the tools used to create a Kubernetes cluster.">
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://jypark0.github.io/post/prepare-for-kubernetes/">
+
+  
+
+
+  
+
+  
+  
+  
+  <meta name="theme-color" content="#0095eb">
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha512-6MXa8B6uaO18Hid6blRMetEIoPqHf7Ux1tnyIQdpt9qI5OACx7C+O3IVTr98vwGnlcg0LOLa02i9Y1HpVhlfiw==" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" integrity="sha256-ygkqlh3CYSUri3LhQxzdcm0n1EQvH2Y+U5S2idbLtxs=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" crossorigin="anonymous">
+        
+      
+    
+
+    
+
+    
+
+  
+
+  
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700%7cRoboto:400,400italic,700%7cRoboto&#43;Mono">
+  
+
+  <link rel="stylesheet" href="/styles.css">
+  
+
+  
+  
+  
+
+  
+  <link rel="alternate" href="https://jypark0.github.io/index.xml" type="application/rss+xml" title="Jung Yeon Park">
+  <link rel="feed" href="https://jypark0.github.io/index.xml" type="application/rss+xml" title="Jung Yeon Park">
+  
+
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="https://jypark0.github.io/post/prepare-for-kubernetes/">
+
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="og:site_name" content="Jung Yeon Park">
+  <meta property="og:url" content="https://jypark0.github.io/post/prepare-for-kubernetes/">
+  <meta property="og:title" content="1. Prepare offline kubeadm install | Jung Yeon Park">
+  <meta property="og:description" content="This is the first of three posts will focus on how to bring up a kubeadm cluster in an offline environment. I completed this a couple of months ago, when the latest k8s version was 1.9, but the concepts should translate over to newer versions.
+ Prepare for kubernetes (*) Download required files on an Internet connected computer Initialize Kubeadm  Kubeadm is one of the tools used to create a Kubernetes cluster.">
+  <meta property="og:locale" content="en-us">
+  
+  <meta property="article:published_time" content="2018-08-06T22:15:26&#43;09:00">
+  
+  <meta property="article:modified_time" content="2018-08-06T22:15:26&#43;09:00">
+  
+
+  
+
+  
+
+  <title>1. Prepare offline kubeadm install | Jung Yeon Park</title>
+
+</head>
+<body id="top" data-spy="scroll" data-target="#toc" data-offset="71" >
+
+<nav class="navbar navbar-default navbar-fixed-top" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="navbar-header">
+      
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+              data-target=".navbar-collapse" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+      <a class="navbar-brand" href="/">Jung Yeon Park</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse">
+
+      
+      
+      <ul class="nav navbar-nav navbar-right">
+        
+
+        
+        
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#about">
+            
+            <span>Home</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+        
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#publications">
+            
+            <span>Publications</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+        
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#talks">
+            
+            <span>Talks</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+        
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#posts">
+            
+            <span>Posts</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+        
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#projects">
+            
+            <span>Projects</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+        
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#contact">
+            
+            <span>Contact</span>
+            
+          </a>
+        </li>
+
+        
+        
+      
+
+      
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+<article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+  <div class="article-container">
+    <h1 itemprop="name">1. Prepare offline kubeadm install</h1>
+
+    
+
+<div class="article-metadata">
+
+  
+  
+  <span itemscope itemprop="author" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Jung Yeon Park">
+  </span>
+  
+
+  <span class="article-date">
+    
+    <meta content="2018-08-06 22:15:26 &#43;0900 KST" itemprop="datePublished">
+    <time datetime="2018-08-06 22:15:26 &#43;0900 KST" itemprop="dateModified">
+      Aug 6, 2018
+    </time>
+  </span>
+  <span itemscope itemprop="publisher" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Jung Yeon Park">
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    6 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fa fa-folder"></i>
+    
+    <a href="https://jypark0.github.io/categories/kubernetes/">kubernetes</a>, 
+    
+    <a href="https://jypark0.github.io/categories/kubeadm/">kubeadm</a>
+    
+  </span>
+  
+  
+
+  
+  
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=1.%20Prepare%20offline%20kubeadm%20install&amp;url=https%3a%2f%2fjypark0.github.io%2fpost%2fprepare-for-kubernetes%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fjypark0.github.io%2fpost%2fprepare-for-kubernetes%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-facebook"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fjypark0.github.io%2fpost%2fprepare-for-kubernetes%2f&amp;title=1.%20Prepare%20offline%20kubeadm%20install"
+         target="_blank" rel="noopener">
+        <i class="fa fa-linkedin"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=https%3a%2f%2fjypark0.github.io%2fpost%2fprepare-for-kubernetes%2f&amp;title=1.%20Prepare%20offline%20kubeadm%20install"
+         target="_blank" rel="noopener">
+        <i class="fa fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=1.%20Prepare%20offline%20kubeadm%20install&amp;body=https%3a%2f%2fjypark0.github.io%2fpost%2fprepare-for-kubernetes%2f">
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+
+    <div class="article-style" itemprop="articleBody">
+      
+
+<p>This is the first of three posts will focus on how to bring up a kubeadm cluster in an offline environment. I completed this a couple of months ago, when the latest k8s version was 1.9, but the concepts should translate over to newer versions.</p>
+
+<ol>
+<li>Prepare for kubernetes (*)</li>
+<li>Download required files on an Internet connected computer</li>
+<li>Initialize Kubeadm</li>
+</ol>
+
+<p><a href="https://github.com/kubernetes/kubernetes/tree/master/cmd/kubeadm" target="_blank">Kubeadm</a> is one of the tools used to create a Kubernetes cluster.
+There are many different ways to <a href="https://kubernetes.io/docs/setup/pick-right-solution/" target="_blank">set up a k8s cluster</a> such as minikube, kops, cloud solutions, and so on. I chose kubeadm as it was one of the simplest solutions for an offline install. I would have liked to use <a href="http://kubespray.io/" target="_blank">kubespray</a> but it requires internet access.</p>
+
+<p>This post mostly focuses on how to prepare nodes for a kubadm installation. I mostly followed the steps <a href="https://kubernetes.io/docs/setup/independent/install-kubeadm/" target="_blank">here</a>.</p>
+
+<p>I created a single-master cluster with 5 nodes as this was a test cluster. You can configure HA masters by following this <a href="https://kubernetes.io/docs/setup/independent/high-availability/" target="_blank">guide</a>.</p>
+
+<p>For reference, here is the simplified Kubernetes architecture (from <a href="https://commons.wikimedia.org/wiki/File:Kubernetes.png#/media/File:Kubernetes.png" target="_blank">Wikipedia</a>)</p>
+
+<p><img src="/img/posts/k8s-architecture.png" alt="Kubernetes Architecture" /></p>
+
+<p>Note: In this guide, we will use <code>root</code> for all commands unless explicitly stated.</p>
+
+<p>Some terminology follows:</p>
+
+<ul>
+<li>docker: the container runtime we will use. Kubernetes can use others as well.</li>
+<li>kubeadm: the administration tool to bootstrap a kubernetes cluster</li>
+<li>kubelet: the kubernetes daemon that runs on all cluster nodes</li>
+<li>kubectl: a command line interface to interact with a kubernetes cluster</li>
+</ul>
+
+<h1 id="1-prerequisites">1. Prerequisites</h1>
+
+<h3 id="1-1-kubernetes-vms">1.1 Kubernetes VMs</h3>
+
+<p>I created five VMs with the following specs:</p>
+
+<ul>
+<li>4 vCPUs</li>
+<li>16GB RAM (initially used 8GB)</li>
+<li>100GB Disk</li>
+<li>1 NIC (disconnected from Internet)</li>
+<li>OS: CentOS 7.3</li>
+</ul>
+
+<p>The master and workers will have the same specs.</p>
+
+<p><img src="/img/posts/k8s-nodes.jpg" alt="Kubernetes Nodes" /></p>
+
+<h3 id="1-2-private-repositories">1.2 Private repositories</h3>
+
+<p>For an easy offline install, I recommend you to set up a private RPM repository for docker and kubernetes repos. You can just copy over the rpm or deb files across all nodes, but it seems like a hassle.</p>
+
+<p>I used <a href="https://www.sonatype.com/nexus-repository-oss" target="_blank">Nexus OSS</a> and used reposync/createrepo from an internet connected computer. You can use whatever solution you like, even a simple httpd server will do.</p>
+
+<h3 id="1-3-private-docker-registry">1.3 Private Docker Registry</h3>
+
+<p>Similarly, I recommend setting up a private docker registry for all the docker images. You <em>could</em> just save/load all the k8s images, but you will need a registry anyway when deploying applications to Kubernetes.</p>
+
+<p>I used <a href="https://about.gitlab.com/installation/?version=ce" target="_blank">Gitlab CE</a> as it was an easy rpm install. You can use <a href="https://docs.docker.com/registry/deploying/" target="_blank">Docker Registry</a> but you need to set it up after installing Docker.</p>
+
+<p><a href="https://github.com/vmware/harbor" target="_blank">VMware Harbor</a> seems very interesting, and has a nice UI as well.</p>
+
+<p>Here, I will use a insecure docker registry, and is not recommended for production.</p>
+
+<h3 id="1-4-other-requirements">1.4 Other requirements</h3>
+
+<p>Please view <a href="https://kubernetes.io/docs/setup/independent/install-kubeadm/" target="_blank">this</a> for all other requirements.</p>
+
+<p>In particular,
+all nodes must have unique hostnames, MAC addresses, and product_uuids.</p>
+
+<h1 id="2-node-settings">2. Node settings</h1>
+
+<h3 id="2-1-disable-swap">2.1 Disable swap</h3>
+
+<p>Kubeadm requires swap to be disabled.</p>
+
+<ul>
+<li><p>To disable temporarily, <code>swapoff -a</code></p></li>
+
+<li><p>To disable permanently, edit <code>/etc/fstab</code> and comment the line with swap.</p></li>
+</ul>
+
+<h3 id="2-2-firewall-ports">2.2 Firewall ports</h3>
+
+<p>Kubernetes requires specific ports to operate: see <a href="https://kubernetes.io/docs/setup/independent/install-kubeadm/" target="_blank">here</a></p>
+
+<p>Configure your firewall to allow these inbound/outbound rules, or disable firewall as I did. This is NOT RECOMMENDED FOR PRODUCTION.</p>
+
+<pre><code class="language-bash">systemctl stop firewalld &amp;&amp; systemctl disable firewalld
+</code></pre>
+
+<h3 id="2-3-configure-default-route">2.3 Configure default route</h3>
+
+<p>The VMs I created use a private network, and doesn&rsquo;t have a default gateway. Kubernetes uses default routes to contact other components, so I simply configured my nodes to have the default gateway as their own IP addresses.</p>
+
+<p>You can edit ifcfg files or use <em>NetworkManager</em> like I did.</p>
+
+<h3 id="2-4-disable-selinux">2.4 Disable SELinux</h3>
+
+<p>Kubernetes requires disabling SELinux to allow containers to access the host filesystem.</p>
+
+<ul>
+<li><p>To disable temporarily, <code>setenforce 0</code></p></li>
+
+<li><p>To disable permanently</p>
+
+<pre><code class="language-bash">sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
+</code></pre></li>
+</ul>
+
+<p>You need to reboot for SELinux changes to take effect. We will reboot after all nodes are configured.</p>
+
+<h3 id="2-5-create-k8s-admin-user-on-master-node">2.5 Create k8s admin user on master node</h3>
+
+<p>I created a new user <code>k8sadmin</code> on the master node <code>k8s01</code> to run kubectl commands.</p>
+
+<pre><code class="language-bash">useradd k8sadmin
+passwd k8sadmin
+</code></pre>
+
+<h1 id="3-install-docker">3. Install Docker</h1>
+
+<p>Docker 17.03 is recommended for use with Kubernetes.</p>
+
+<h3 id="3-1-create-local-docker-rpm-repository">3.1. Create local docker RPM repository</h3>
+
+<p>I followed the instructions from <a href="https://docs.docker.com/install/linux/docker-ce/centos/#install-docker-ce" target="_blank">Docker&rsquo;s website</a> but mirrored their centos repository and uploaded it to my private Nexus repository.</p>
+
+<p>You can browse through their <a href="https://download.docker.com/linux/centos/7/x86_64/stable/Packages/" target="_blank">repo for Centos 7 x86_64</a>, and use the ones you want.</p>
+
+<p>Create a repo file for our private docker repository and install docker-ce</p>
+
+<pre><code class="language-bash">cat &lt;&lt; EOF &gt; /etc/yum.repos.d/docker-ce.repo
+[docker-ce-stable]
+name=Docker CE Stable-$basearch
+baseurl=&lt;docker-repo-url&gt;
+enabled=1
+gpgcheck=0
+EOF
+
+yum install -y docker-ce-selinux docker-ce
+systemctl enable docker &amp;&amp; systemctl start docker
+</code></pre>
+
+<p>I disabled the GPG key here, but is recommended for production.</p>
+
+<h3 id="3-2-configure-docker-options">3.2 Configure docker options</h3>
+
+<p>You need to configure docker to use the private docker registry as the default.</p>
+
+<p>Create a <code>/etc/docker/daemon.json</code> file.</p>
+
+<pre><code class="language-bash">cat &lt;&lt; EOF &gt; /etc/docker/daemon.json
+{
+  &quot;registry-mirrors&quot;: [&quot;http://&lt;docker-registry-host&gt;:&lt;port&gt;&quot;],
+  &quot;insecure-registries&quot;: [&quot;&lt;docker-registry-host&gt;:&lt;port&gt;&quot;]
+}
+EOF
+</code></pre>
+
+<p>For some reason, I had to add the <code>http://</code> prefix to <code>registry-mirrors</code> and not to <code>insecure-registries</code> to get it working properly. <code>registry-mirrors</code> allows docker to pull from this mirror before pulling from the public docker Hub, and <code>insecure-registries</code> is for http access.</p>
+
+<p>In 1.9, Kubernetes recommended using <code>systemd</code> as the <code>cgroup-driver</code> but newer versions don&rsquo;t seem to require it. Consult the latest <a href="https://kubernetes.io/docs/setup/independent/install-kubeadm/" target="_blank">kubeadm documentation</a> for more info.</p>
+
+<p>Add <code>cgroup-driver</code> option to the <code>daemon.json</code> file and restart docker.</p>
+
+<pre><code class="language-bash">{
+  &quot;exec-opts&quot;: [&quot;native.cgroupdriver=systemd&quot;],
+  &quot;registry-mirrors&quot;: [&quot;http://&lt;docker-registry-host&gt;:&lt;port&gt;&quot;],
+  &quot;insecure-registries&quot;: [&quot;&lt;docker-registry-host&gt;:&lt;port&gt;&quot;]
+}
+</code></pre>
+
+<pre><code class="language-bash">systemctl restart docker
+</code></pre>
+
+<h3 id="3-3-copy-docker-registry-credentials-if-needed">3.3 Copy docker registry credentials if needed</h3>
+
+<p>If your registry requires login for pulling images, you need to copy those credentials to all k8s nodes.</p>
+
+<p>First login to the registry</p>
+
+<pre><code class="language-bash">docker login &lt;docker-registry-host&gt;:&lt;port&gt;
+Username: jungy.park
+Password:
+Login Succeeded
+</code></pre>
+
+<p>Credentials are created in <code>$HOME/.docker/config.json</code>. Copy that file to <code>/root/.docker/config.json</code> to other nodes, so that they can pull images automatically when joining to the kubernetes cluster.</p>
+
+<h3 id="3-4-non-root-user">3.4 Non-root user</h3>
+
+<p>If you want to use a non-root user to control docker, add that user to the group <code>docker</code></p>
+
+<pre><code class="language-bash">usermod -aG docker k8sadmin
+</code></pre>
+
+<h2 id="4-install-kubeadm-kubelet-and-kubectl">4. Install kubeadm, kubelet, and kubectl</h2>
+
+<p>Make sure that you have created a private kubernetes repository by downloading from <a href="https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64" target="_blank">the official kubernetes site</a>. Use reposync/createrepo.</p>
+
+<h3 id="4-1-add-kubernetes-repo-file">4.1 Add kubernetes repo file</h3>
+
+<pre><code class="language-bash">cat &lt;&lt; EOF &gt; /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=&lt;local-kubernetes-repo-url&gt;
+enabled=1
+gpgcheck=0
+EOF
+yum install -y kubelet kubeadm kubectl
+systemctl enable kubelet &amp;&amp; systemctl start kubelet
+</code></pre>
+
+<p>The kubelet should be in a crashloop, until you initialize the master (will cover this in next few posts.)</p>
+
+<h3 id="4-2-add-kernel-parameters">4.2 Add kernel parameters</h3>
+
+<p>For RHEL/CentOS 7, you need to add the following kernel parameters:</p>
+
+<pre><code class="language-bash">cat &lt;&lt; EOF &gt; /etc/sysctl.d/10-k8s.conf
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+EOF
+sysctl --system
+</code></pre>
+
+<h1 id="5-miscellaneous">5. Miscellaneous</h1>
+
+<p>I manually added the nodes to the hosts file, and copied them across all nodes</p>
+
+<pre><code class="language-bash">cat &lt;&lt; EOF &gt; /etc/hosts
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+
+# Kubernetes Master
+192.168.0.1 k8s01
+
+# Kubernetes Nodes
+192.168.0.2 k8s02
+192.168.0.3 k8s03
+192.168.0.4 k8s04
+192.168.0.5 k8s05
+EOF
+</code></pre>
+
+<p>Reboot to make sure all changes take effect.</p>
+
+<p>That&rsquo;s it for this post. In the next, I will talk about how to download and upload docker images and list which were required for initializing a k8s cluster.</p>
+
+    </div>
+
+    
+
+
+
+
+
+    
+    
+
+    
+
+    
+
+
+  </div>
+</article>
+
+<footer class="site-footer">
+  <div class="container">
+
+    
+
+    <p class="powered-by">
+
+      &copy; 2018 &middot; 
+
+      Powered by the
+      <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+      <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+      <span class="pull-right" aria-hidden="true">
+        <a href="#" id="back_to_top">
+          <span class="button_icon">
+            <i class="fa fa-chevron-up fa-2x"></i>
+          </span>
+        </a>
+      </span>
+
+    </p>
+  </div>
+</footer>
+
+
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close btn-large" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Cite</h4>
+      </div>
+      <div>
+        <pre><code class="modal-body tex"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary btn-outline js-copy-cite" href="#" target="_blank">
+          <i class="fa fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-primary btn-outline js-download-cite" href="#" target="_blank">
+          <i class="fa fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+    
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.3/imagesloaded.pkgd.min.js" integrity="sha512-umsR78NN0D23AzgoZ11K7raBD+R6hqKojyBZs1w8WvYlsI+QuKRGBx3LFCwhatzBunCjDuJpDHwxD13sLMbpRA==" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha512-iztkobsvnjKfAtTNdHkGVjAYTrrtlC7mGp/54c40wowO7LhURYl3gVzzcEqGl/qKXQltJ2HwMrdLcNUdo+N/RQ==" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.4/isotope.pkgd.min.js" integrity="sha512-VDBOIlDbuC4VWxGJNmuFRQ0Li0SKkDpmGyuhAG5LTDLd/dJ/S0WMVxriR2Y+CyPL5gzjpN4f/6iqWVBJlht0tQ==" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" integrity="sha256-X5PoE3KU5l+JcX+w09p/wHl9AzK333C4hJ2I9S5mD4M=" crossorigin="anonymous"></script>
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+        
+      
+
+      
+      
+    
+
+    <script src="/js/hugo-academic.js"></script>
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+
+  </body>
+</html>
+

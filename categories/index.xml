@@ -12,6 +12,24 @@
     
     
     <item>
+      <title>Kubeadm</title>
+      <link>https://jypark0.github.io/categories/kubeadm/</link>
+      <pubDate>Mon, 06 Aug 2018 22:15:26 +0900</pubDate>
+      
+      <guid>https://jypark0.github.io/categories/kubeadm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Kubernetes</title>
+      <link>https://jypark0.github.io/categories/kubernetes/</link>
+      <pubDate>Mon, 06 Aug 2018 22:15:26 +0900</pubDate>
+      
+      <guid>https://jypark0.github.io/categories/kubernetes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Minikube</title>
       <link>https://jypark0.github.io/categories/minikube/</link>
       <pubDate>Sun, 29 Jul 2018 15:36:23 +0900</pubDate>

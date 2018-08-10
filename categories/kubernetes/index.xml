@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kubernetes on Jung Yeon Park</title>
+    <link>https://jypark0.github.io/categories/kubernetes/</link>
+    <description>Recent content in Kubernetes on Jung Yeon Park</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018</copyright>
+    <lastBuildDate>Mon, 06 Aug 2018 22:15:26 +0900</lastBuildDate>
+    
+	<atom:link href="https://jypark0.github.io/categories/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>1. Prepare offline kubeadm install</title>
+      <link>https://jypark0.github.io/post/prepare-for-kubernetes/</link>
+      <pubDate>Mon, 06 Aug 2018 22:15:26 +0900</pubDate>
+      
+      <guid>https://jypark0.github.io/post/prepare-for-kubernetes/</guid>
+      <description>This is the first of three posts will focus on how to bring up a kubeadm cluster in an offline environment. I completed this a couple of months ago, when the latest k8s version was 1.9, but the concepts should translate over to newer versions.
+ Prepare for kubernetes (*) Download required files on an Internet connected computer Initialize Kubeadm  Kubeadm is one of the tools used to create a Kubernetes cluster.</description>
+    </item>
+    
+  </channel>
+</rss>

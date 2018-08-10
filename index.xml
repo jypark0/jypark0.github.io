@@ -11,46 +11,272 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>Kubernetes</title>
-      <link>https://jypark0.github.io/project/kubernetes/</link>
-      <pubDate>Sun, 29 Jul 2018 15:41:26 +0900</pubDate>
+      <title>1. Prepare offline kubeadm install</title>
+      <link>https://jypark0.github.io/post/prepare-for-kubernetes/</link>
+      <pubDate>Mon, 06 Aug 2018 22:15:26 +0900</pubDate>
       
-      <guid>https://jypark0.github.io/project/kubernetes/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;https://kubernetes.io/&#34; target=&#34;_blank&#34;&gt;Kubernetes&lt;/a&gt; is a container orchestration platform, designed to run containerized workloads in production. Originally, an internal project at Google, Kubernetes (k8s) was donated to &lt;a href=&#34;https://www.cncf.io/&#34; target=&#34;_blank&#34;&gt;CNCF&lt;/a&gt; in 2014 and has since become one of the most popular platforms for running containers.&lt;/p&gt;
+      <guid>https://jypark0.github.io/post/prepare-for-kubernetes/</guid>
+      <description>
 
-&lt;p&gt;Real applications often consist of multiple containers, spread across multiple nodes. Kubernetes gives you a way to manage these containers and deploy them to the end users. Some of its features include:&lt;/p&gt;
+&lt;p&gt;This is the first of three posts will focus on how to bring up a kubeadm cluster in an offline environment. I completed this a couple of months ago, when the latest k8s version was 1.9, but the concepts should translate over to newer versions.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Prepare for kubernetes (*)&lt;/li&gt;
+&lt;li&gt;Download required files on an Internet connected computer&lt;/li&gt;
+&lt;li&gt;Initialize Kubeadm&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/kubernetes/kubernetes/tree/master/cmd/kubeadm&#34; target=&#34;_blank&#34;&gt;Kubeadm&lt;/a&gt; is one of the tools used to create a Kubernetes cluster.
+There are many different ways to &lt;a href=&#34;https://kubernetes.io/docs/setup/pick-right-solution/&#34; target=&#34;_blank&#34;&gt;set up a k8s cluster&lt;/a&gt; such as minikube, kops, cloud solutions, and so on. I chose kubeadm as it was one of the simplest solutions for an offline install. I would have liked to use &lt;a href=&#34;http://kubespray.io/&#34; target=&#34;_blank&#34;&gt;kubespray&lt;/a&gt; but it requires internet access.&lt;/p&gt;
+
+&lt;p&gt;This post mostly focuses on how to prepare nodes for a kubadm installation. I mostly followed the steps &lt;a href=&#34;https://kubernetes.io/docs/setup/independent/install-kubeadm/&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;I created a single-master cluster with 5 nodes as this was a test cluster. You can configure HA masters by following this &lt;a href=&#34;https://kubernetes.io/docs/setup/independent/high-availability/&#34; target=&#34;_blank&#34;&gt;guide&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;For reference, here is the simplified Kubernetes architecture (from &lt;a href=&#34;https://commons.wikimedia.org/wiki/File:Kubernetes.png#/media/File:Kubernetes.png&#34; target=&#34;_blank&#34;&gt;Wikipedia&lt;/a&gt;)&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://jypark0.github.io/img/posts/k8s-architecture.png&#34; alt=&#34;Kubernetes Architecture&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Note: In this guide, we will use &lt;code&gt;root&lt;/code&gt; for all commands unless explicitly stated.&lt;/p&gt;
+
+&lt;p&gt;Some terminology follows:&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;Automatic binpacking: automatically places containers across nodes based on resource requirements and constraints&lt;/li&gt;
-&lt;li&gt;Horizontal scaling: easily create/delete multiple replicas of an application&lt;/li&gt;
-&lt;li&gt;Self healing: restarts containers that fail, container health checking&lt;/li&gt;
-&lt;li&gt;Service discovery and load balancing: groups application containers with a DNS name and load balances requests among them.&lt;/li&gt;
+&lt;li&gt;docker: the container runtime we will use. Kubernetes can use others as well.&lt;/li&gt;
+&lt;li&gt;kubeadm: the administration tool to bootstrap a kubernetes cluster&lt;/li&gt;
+&lt;li&gt;kubelet: the kubernetes daemon that runs on all cluster nodes&lt;/li&gt;
+&lt;li&gt;kubectl: a command line interface to interact with a kubernetes cluster&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Some helpful resources:&lt;/p&gt;
+&lt;h1 id=&#34;1-prerequisites&#34;&gt;1. Prerequisites&lt;/h1&gt;
+
+&lt;h3 id=&#34;1-1-kubernetes-vms&#34;&gt;1.1 Kubernetes VMs&lt;/h3&gt;
+
+&lt;p&gt;I created five VMs with the following specs:&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://kubernetes.io/docs/home/&#34; target=&#34;_blank&#34;&gt;Kubernetes documentation&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://kubernetes.io/docs/tutorials/&#34; target=&#34;_blank&#34;&gt;Kubernetes tutorials&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://kubernetesbyexample.com/&#34; target=&#34;_blank&#34;&gt;Kubernetes By Example&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.edx.org/course/introduction-to-kubernetes&#34; target=&#34;_blank&#34;&gt;edX: Introduction to Kubernetes&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/kelseyhightower/kubernetes-the-hard-way&#34; target=&#34;_blank&#34;&gt;Kubernetes the hard way&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://techbeacon.com/top-tutorials-mastering-kubernetes&#34; target=&#34;_blank&#34;&gt;47 advanced tutorials for mastering Kubernetes&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;4 vCPUs&lt;/li&gt;
+&lt;li&gt;16GB RAM (initially used 8GB)&lt;/li&gt;
+&lt;li&gt;100GB Disk&lt;/li&gt;
+&lt;li&gt;1 NIC (disconnected from Internet)&lt;/li&gt;
+&lt;li&gt;OS: CentOS 7.3&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;I started to learn about Kubernetes around six months ago, starting with the &lt;a href=&#34;https://www.edx.org/course/introduction-to-kubernetes&#34; target=&#34;_blank&#34;&gt;edX course&lt;/a&gt;.
-Over several months, I&amp;rsquo;ve been working on how to install Kubernetes in a disconnected (no Internet) environment. I&amp;rsquo;ve also focused on how to integrate other technologies with k8s, such as storage, package management, logging, monitoring and so on, for a complete container platform.&lt;/p&gt;
+&lt;p&gt;The master and workers will have the same specs.&lt;/p&gt;
 
-&lt;p&gt;I will start posting about my experience with Kubernetes so far. I will mostly focus on how to install various things with an air-gapped installation.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://jypark0.github.io/img/posts/k8s-nodes.jpg&#34; alt=&#34;Kubernetes Nodes&#34; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;1-2-private-repositories&#34;&gt;1.2 Private repositories&lt;/h3&gt;
+
+&lt;p&gt;For an easy offline install, I recommend you to set up a private RPM repository for docker and kubernetes repos. You can just copy over the rpm or deb files across all nodes, but it seems like a hassle.&lt;/p&gt;
+
+&lt;p&gt;I used &lt;a href=&#34;https://www.sonatype.com/nexus-repository-oss&#34; target=&#34;_blank&#34;&gt;Nexus OSS&lt;/a&gt; and used reposync/createrepo from an internet connected computer. You can use whatever solution you like, even a simple httpd server will do.&lt;/p&gt;
+
+&lt;h3 id=&#34;1-3-private-docker-registry&#34;&gt;1.3 Private Docker Registry&lt;/h3&gt;
+
+&lt;p&gt;Similarly, I recommend setting up a private docker registry for all the docker images. You &lt;em&gt;could&lt;/em&gt; just save/load all the k8s images, but you will need a registry anyway when deploying applications to Kubernetes.&lt;/p&gt;
+
+&lt;p&gt;I used &lt;a href=&#34;https://about.gitlab.com/installation/?version=ce&#34; target=&#34;_blank&#34;&gt;Gitlab CE&lt;/a&gt; as it was an easy rpm install. You can use &lt;a href=&#34;https://docs.docker.com/registry/deploying/&#34; target=&#34;_blank&#34;&gt;Docker Registry&lt;/a&gt; but you need to set it up after installing Docker.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/vmware/harbor&#34; target=&#34;_blank&#34;&gt;VMware Harbor&lt;/a&gt; seems very interesting, and has a nice UI as well.&lt;/p&gt;
+
+&lt;p&gt;Here, I will use a insecure docker registry, and is not recommended for production.&lt;/p&gt;
+
+&lt;h3 id=&#34;1-4-other-requirements&#34;&gt;1.4 Other requirements&lt;/h3&gt;
+
+&lt;p&gt;Please view &lt;a href=&#34;https://kubernetes.io/docs/setup/independent/install-kubeadm/&#34; target=&#34;_blank&#34;&gt;this&lt;/a&gt; for all other requirements.&lt;/p&gt;
+
+&lt;p&gt;In particular,
+all nodes must have unique hostnames, MAC addresses, and product_uuids.&lt;/p&gt;
+
+&lt;h1 id=&#34;2-node-settings&#34;&gt;2. Node settings&lt;/h1&gt;
+
+&lt;h3 id=&#34;2-1-disable-swap&#34;&gt;2.1 Disable swap&lt;/h3&gt;
+
+&lt;p&gt;Kubeadm requires swap to be disabled.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;To disable temporarily, &lt;code&gt;swapoff -a&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;To disable permanently, edit &lt;code&gt;/etc/fstab&lt;/code&gt; and comment the line with swap.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;2-2-firewall-ports&#34;&gt;2.2 Firewall ports&lt;/h3&gt;
+
+&lt;p&gt;Kubernetes requires specific ports to operate: see &lt;a href=&#34;https://kubernetes.io/docs/setup/independent/install-kubeadm/&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Configure your firewall to allow these inbound/outbound rules, or disable firewall as I did. This is NOT RECOMMENDED FOR PRODUCTION.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;systemctl stop firewalld &amp;amp;&amp;amp; systemctl disable firewalld
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;2-3-configure-default-route&#34;&gt;2.3 Configure default route&lt;/h3&gt;
+
+&lt;p&gt;The VMs I created use a private network, and doesn&amp;rsquo;t have a default gateway. Kubernetes uses default routes to contact other components, so I simply configured my nodes to have the default gateway as their own IP addresses.&lt;/p&gt;
+
+&lt;p&gt;You can edit ifcfg files or use &lt;em&gt;NetworkManager&lt;/em&gt; like I did.&lt;/p&gt;
+
+&lt;h3 id=&#34;2-4-disable-selinux&#34;&gt;2.4 Disable SELinux&lt;/h3&gt;
+
+&lt;p&gt;Kubernetes requires disabling SELinux to allow containers to access the host filesystem.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;To disable temporarily, &lt;code&gt;setenforce 0&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;To disable permanently&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sed -i &#39;s/SELINUX=enforcing/SELINUX=disabled/g&#39; /etc/selinux/config
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;You need to reboot for SELinux changes to take effect. We will reboot after all nodes are configured.&lt;/p&gt;
+
+&lt;h3 id=&#34;2-5-create-k8s-admin-user-on-master-node&#34;&gt;2.5 Create k8s admin user on master node&lt;/h3&gt;
+
+&lt;p&gt;I created a new user &lt;code&gt;k8sadmin&lt;/code&gt; on the master node &lt;code&gt;k8s01&lt;/code&gt; to run kubectl commands.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;useradd k8sadmin
+passwd k8sadmin
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;3-install-docker&#34;&gt;3. Install Docker&lt;/h1&gt;
+
+&lt;p&gt;Docker 17.03 is recommended for use with Kubernetes.&lt;/p&gt;
+
+&lt;h3 id=&#34;3-1-create-local-docker-rpm-repository&#34;&gt;3.1. Create local docker RPM repository&lt;/h3&gt;
+
+&lt;p&gt;I followed the instructions from &lt;a href=&#34;https://docs.docker.com/install/linux/docker-ce/centos/#install-docker-ce&#34; target=&#34;_blank&#34;&gt;Docker&amp;rsquo;s website&lt;/a&gt; but mirrored their centos repository and uploaded it to my private Nexus repository.&lt;/p&gt;
+
+&lt;p&gt;You can browse through their &lt;a href=&#34;https://download.docker.com/linux/centos/7/x86_64/stable/Packages/&#34; target=&#34;_blank&#34;&gt;repo for Centos 7 x86_64&lt;/a&gt;, and use the ones you want.&lt;/p&gt;
+
+&lt;p&gt;Create a repo file for our private docker repository and install docker-ce&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cat &amp;lt;&amp;lt; EOF &amp;gt; /etc/yum.repos.d/docker-ce.repo
+[docker-ce-stable]
+name=Docker CE Stable-$basearch
+baseurl=&amp;lt;docker-repo-url&amp;gt;
+enabled=1
+gpgcheck=0
+EOF
+
+yum install -y docker-ce-selinux docker-ce
+systemctl enable docker &amp;amp;&amp;amp; systemctl start docker
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I disabled the GPG key here, but is recommended for production.&lt;/p&gt;
+
+&lt;h3 id=&#34;3-2-configure-docker-options&#34;&gt;3.2 Configure docker options&lt;/h3&gt;
+
+&lt;p&gt;You need to configure docker to use the private docker registry as the default.&lt;/p&gt;
+
+&lt;p&gt;Create a &lt;code&gt;/etc/docker/daemon.json&lt;/code&gt; file.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cat &amp;lt;&amp;lt; EOF &amp;gt; /etc/docker/daemon.json
+{
+  &amp;quot;registry-mirrors&amp;quot;: [&amp;quot;http://&amp;lt;docker-registry-host&amp;gt;:&amp;lt;port&amp;gt;&amp;quot;],
+  &amp;quot;insecure-registries&amp;quot;: [&amp;quot;&amp;lt;docker-registry-host&amp;gt;:&amp;lt;port&amp;gt;&amp;quot;]
+}
+EOF
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;For some reason, I had to add the &lt;code&gt;http://&lt;/code&gt; prefix to &lt;code&gt;registry-mirrors&lt;/code&gt; and not to &lt;code&gt;insecure-registries&lt;/code&gt; to get it working properly. &lt;code&gt;registry-mirrors&lt;/code&gt; allows docker to pull from this mirror before pulling from the public docker Hub, and &lt;code&gt;insecure-registries&lt;/code&gt; is for http access.&lt;/p&gt;
+
+&lt;p&gt;In 1.9, Kubernetes recommended using &lt;code&gt;systemd&lt;/code&gt; as the &lt;code&gt;cgroup-driver&lt;/code&gt; but newer versions don&amp;rsquo;t seem to require it. Consult the latest &lt;a href=&#34;https://kubernetes.io/docs/setup/independent/install-kubeadm/&#34; target=&#34;_blank&#34;&gt;kubeadm documentation&lt;/a&gt; for more info.&lt;/p&gt;
+
+&lt;p&gt;Add &lt;code&gt;cgroup-driver&lt;/code&gt; option to the &lt;code&gt;daemon.json&lt;/code&gt; file and restart docker.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;{
+  &amp;quot;exec-opts&amp;quot;: [&amp;quot;native.cgroupdriver=systemd&amp;quot;],
+  &amp;quot;registry-mirrors&amp;quot;: [&amp;quot;http://&amp;lt;docker-registry-host&amp;gt;:&amp;lt;port&amp;gt;&amp;quot;],
+  &amp;quot;insecure-registries&amp;quot;: [&amp;quot;&amp;lt;docker-registry-host&amp;gt;:&amp;lt;port&amp;gt;&amp;quot;]
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;systemctl restart docker
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;3-3-copy-docker-registry-credentials-if-needed&#34;&gt;3.3 Copy docker registry credentials if needed&lt;/h3&gt;
+
+&lt;p&gt;If your registry requires login for pulling images, you need to copy those credentials to all k8s nodes.&lt;/p&gt;
+
+&lt;p&gt;First login to the registry&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;docker login &amp;lt;docker-registry-host&amp;gt;:&amp;lt;port&amp;gt;
+Username: jungy.park
+Password:
+Login Succeeded
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Credentials are created in &lt;code&gt;$HOME/.docker/config.json&lt;/code&gt;. Copy that file to &lt;code&gt;/root/.docker/config.json&lt;/code&gt; to other nodes, so that they can pull images automatically when joining to the kubernetes cluster.&lt;/p&gt;
+
+&lt;h3 id=&#34;3-4-non-root-user&#34;&gt;3.4 Non-root user&lt;/h3&gt;
+
+&lt;p&gt;If you want to use a non-root user to control docker, add that user to the group &lt;code&gt;docker&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;usermod -aG docker k8sadmin
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;4-install-kubeadm-kubelet-and-kubectl&#34;&gt;4. Install kubeadm, kubelet, and kubectl&lt;/h2&gt;
+
+&lt;p&gt;Make sure that you have created a private kubernetes repository by downloading from &lt;a href=&#34;https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64&#34; target=&#34;_blank&#34;&gt;the official kubernetes site&lt;/a&gt;. Use reposync/createrepo.&lt;/p&gt;
+
+&lt;h3 id=&#34;4-1-add-kubernetes-repo-file&#34;&gt;4.1 Add kubernetes repo file&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cat &amp;lt;&amp;lt; EOF &amp;gt; /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=&amp;lt;local-kubernetes-repo-url&amp;gt;
+enabled=1
+gpgcheck=0
+EOF
+yum install -y kubelet kubeadm kubectl
+systemctl enable kubelet &amp;amp;&amp;amp; systemctl start kubelet
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The kubelet should be in a crashloop, until you initialize the master (will cover this in next few posts.)&lt;/p&gt;
+
+&lt;h3 id=&#34;4-2-add-kernel-parameters&#34;&gt;4.2 Add kernel parameters&lt;/h3&gt;
+
+&lt;p&gt;For RHEL/CentOS 7, you need to add the following kernel parameters:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cat &amp;lt;&amp;lt; EOF &amp;gt; /etc/sysctl.d/10-k8s.conf
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+EOF
+sysctl --system
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;5-miscellaneous&#34;&gt;5. Miscellaneous&lt;/h1&gt;
+
+&lt;p&gt;I manually added the nodes to the hosts file, and copied them across all nodes&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cat &amp;lt;&amp;lt; EOF &amp;gt; /etc/hosts
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+
+# Kubernetes Master
+192.168.0.1 k8s01
+
+# Kubernetes Nodes
+192.168.0.2 k8s02
+192.168.0.3 k8s03
+192.168.0.4 k8s04
+192.168.0.5 k8s05
+EOF
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Reboot to make sure all changes take effect.&lt;/p&gt;
+
+&lt;p&gt;That&amp;rsquo;s it for this post. In the next, I will talk about how to download and upload docker images and list which were required for initializing a k8s cluster.&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>Setting up Minikube with corporate proxy</title>
-      <link>https://jypark0.github.io/post/2018-minikube/</link>
+      <link>https://jypark0.github.io/post/minikube-proxy/</link>
       <pubDate>Sun, 29 Jul 2018 15:36:23 +0900</pubDate>
       
-      <guid>https://jypark0.github.io/post/2018-minikube/</guid>
+      <guid>https://jypark0.github.io/post/minikube-proxy/</guid>
       <description>
 
 &lt;p&gt;&lt;a href=&#34;https://kubernetes.io/docs/setup/minikube/&#34; target=&#34;_blank&#34;&gt;Minikube&lt;/a&gt; is an easy way to get started with Kubernetes. It runs as a single-node Kubernetes cluster inside a VM, and includes almost all features of k8s, so you can try them out before installing them to an actual cluster.&lt;/p&gt;
@@ -61,9 +287,10 @@ Over several months, I&amp;rsquo;ve been working on how to install Kubernetes in
 &lt;li&gt;Kubernetes dashboard&lt;/li&gt;
 &lt;li&gt;EFK&lt;/li&gt;
 &lt;li&gt;Registry&lt;/li&gt;
-&lt;li&gt;Ingress
-and so on.&lt;/li&gt;
+&lt;li&gt;Ingress&lt;/li&gt;
 &lt;/ul&gt;
+
+&lt;p&gt;and so on.&lt;/p&gt;
 
 &lt;p&gt;(see &lt;a href=&#34;https://github.com/kubernetes/minikube/blob/master/docs/addons.md&#34; target=&#34;_blank&#34;&gt;https://github.com/kubernetes/minikube/blob/master/docs/addons.md&lt;/a&gt;)&lt;/p&gt;
 

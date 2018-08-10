@@ -14,13 +14,14 @@
     
     <item>
       <title>Setting up Minikube with corporate proxy</title>
-      <link>https://jypark0.github.io/post/2018-minikube/</link>
+      <link>https://jypark0.github.io/post/minikube-proxy/</link>
       <pubDate>Sun, 29 Jul 2018 15:36:23 +0900</pubDate>
       
-      <guid>https://jypark0.github.io/post/2018-minikube/</guid>
+      <guid>https://jypark0.github.io/post/minikube-proxy/</guid>
       <description>Minikube is an easy way to get started with Kubernetes. It runs as a single-node Kubernetes cluster inside a VM, and includes almost all features of k8s, so you can try them out before installing them to an actual cluster.
 Supported addons include:
- Kubernetes dashboard EFK Registry Ingress and so on.  (see https://github.com/kubernetes/minikube/blob/master/docs/addons.md)
+ Kubernetes dashboard EFK Registry Ingress  and so on.
+(see https://github.com/kubernetes/minikube/blob/master/docs/addons.md)
 Minikube creates a VM that includes Kubernetes and a Docker daemon. To use containers inside this VM, you need to pass on the proxy settings to the docker daemon and install the certificate as well.</description>
     </item>
     
