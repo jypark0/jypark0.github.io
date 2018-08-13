@@ -7,9 +7,73 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2018</copyright>
+    <lastBuildDate>Fri, 15 Sep 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://jypark0.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Computational tradeoff</title>
+      <link>https://jypark0.github.io/tags/computational-tradeoff/</link>
+      <pubDate>Fri, 15 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://jypark0.github.io/tags/computational-tradeoff/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Equipment models</title>
+      <link>https://jypark0.github.io/tags/equipment-models/</link>
+      <pubDate>Fri, 15 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://jypark0.github.io/tags/equipment-models/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Kubeadm</title>
+      <link>https://jypark0.github.io/tags/kubeadm/</link>
+      <pubDate>Mon, 13 Aug 2018 20:43:15 +0900</pubDate>
+      
+      <guid>https://jypark0.github.io/tags/kubeadm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Kubernetes</title>
+      <link>https://jypark0.github.io/tags/kubernetes/</link>
+      <pubDate>Mon, 13 Aug 2018 20:43:15 +0900</pubDate>
+      
+      <guid>https://jypark0.github.io/tags/kubernetes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Minikube</title>
+      <link>https://jypark0.github.io/tags/minikube/</link>
+      <pubDate>Sun, 29 Jul 2018 15:36:23 +0900</pubDate>
+      
+      <guid>https://jypark0.github.io/tags/minikube/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Proxy</title>
+      <link>https://jypark0.github.io/tags/proxy/</link>
+      <pubDate>Sun, 29 Jul 2018 15:36:23 +0900</pubDate>
+      
+      <guid>https://jypark0.github.io/tags/proxy/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Semiconductor</title>
+      <link>https://jypark0.github.io/tags/semiconductor/</link>
+      <pubDate>Fri, 15 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://jypark0.github.io/tags/semiconductor/</guid>
+      <description></description>
+    </item>
     
   </channel>
 </rss>

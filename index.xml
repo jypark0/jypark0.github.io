@@ -11,6 +11,241 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>2. Required images for kubeadm</title>
+      <link>https://jypark0.github.io/post/internet-download/</link>
+      <pubDate>Mon, 13 Aug 2018 20:43:15 +0900</pubDate>
+      
+      <guid>https://jypark0.github.io/post/internet-download/</guid>
+      <description>
+
+&lt;p&gt;This is the second of three posts will focus on how to bring up a kubeadm cluster in an offline environment. Refer to the &lt;a href=&#34;https://jypark0.github.io/post/prepare-for-kubernetes/&#34; target=&#34;_blank&#34;&gt;first post&lt;/a&gt; for information on how to set up k8s nodes and to install kubeadm.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Prepare for kubernetes&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Download required images for kubeadm&lt;/strong&gt; [*]&lt;/li&gt;
+&lt;li&gt;Initialize Kubeadm&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;This post focuses on the required Docker images for kubeadm and downloading/uploading them to our private registry.&lt;/p&gt;
+
+&lt;h1 id=&#34;1-download-docker-images-from-an-internet-connected-computer&#34;&gt;1. Download docker images from an internet connected computer&lt;/h1&gt;
+
+&lt;p&gt;First, install docker on an internet connected computer. I installed Virtualbox and booted up a CentOS 7 VM and installed docker as described on their &lt;a href=&#34;https://docs.docker.com/install/linux/docker-ce/centos/#install-using-the-repository&#34; target=&#34;_blank&#34;&gt;website&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The required images for kubeadm are listed &lt;a href=&#34;https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-init/&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt;. I have copied the table over here for reference.&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Image Name&lt;/th&gt;
+&lt;th&gt;v1.9 release branch version&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;k8s.gcr.io/kube-apiserver-${ARCH}&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;v1.9.x&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;k8s.gcr.io/kube-controller-manager-${ARCH}&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;v1.9.x&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;k8s.gcr.io/kube-scheduler-${ARCH}&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;v1.9.x&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;k8s.gcr.io/kube-proxy-${ARCH}&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;v1.9.x&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;k8s.gcr.io/etcd-${ARCH}&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;3.1.10&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;k8s.gcr.io/pause-${ARCH}&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;3.0&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;k8s.gcr.io/k8s-dns-sidecar-${ARCH}&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;1.14.7&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;k8s.gcr.io/k8s-dns-kube-dns-${ARCH}&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;1.14.7&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;k8s.gcr.io/k8s-dns-dnsmasq-nanny-${ARCH}&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;1.14.7&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;I created a short python script to read images from a list, save them as tarballs in the specified output directory. It&amp;rsquo;s very basic but works well enough.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;save.images.py&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;#!/usr/bin/env python
+
+# arg1: image list file
+# arg2: tarball output directory
+
+import os, sys, re, subprocess
+
+if len(sys.argv[1]) &amp;gt; 1:
+  image_list_file = sys.argv[1]
+
+rootdir = &amp;quot;&amp;quot;
+if len(sys.argv[2]) &amp;gt; 1:
+  rootdir = os.path.abspath(sys.argv[2])
+
+if not os.path.exists(rootdir):
+  os.makedirs(rootdir)
+
+with open(image_list_file) as file:
+  data = [line.strip() for line in file.readlines() if line.strip()]
+
+for line in data:
+  image = re.split(&#39;[/:]&#39;, line)
+  tar_name = os.path.join(rootdir, image[-2] + &amp;quot;_&amp;quot; + image[-1] + &amp;quot;.tar&amp;quot;)
+  if not os.path.exists(tar_name):
+    subprocess.call([&amp;quot;docker&amp;quot;, &amp;quot;pull&amp;quot;, line])
+    subprocess.call([&amp;quot;docker&amp;quot;, &amp;quot;save&amp;quot;, line, &amp;quot;-o&amp;quot;, tar_name])
+    subprocess.call([&amp;quot;docker&amp;quot;, &amp;quot;rmi&amp;quot;, line])
+    print(&amp;quot;\n&amp;quot;)
+  else:
+    print(&amp;quot;\n### &amp;quot; + line + &amp;quot; already exists. Skipping ...\n&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Here is the exact image list I used. There shouldn&amp;rsquo;t be any spaces or empty lines in this file.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;image_list&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;k8s.gcr.io/kube-apiserver-amd64:v1.9.1
+k8s.gcr.io/kube-controller-manager-amd64:v1.9.1
+k8s.gcr.io/kube-scheduler-amd64:v1.9.1
+k8s.gcr.io/kube-proxy-amd64:v1.9.1
+k8s.gcr.io/etcd-amd64:3.1.10
+k8s.gcr.io/pause-amd64:3.0
+k8s.gcr.io/k8s-dns-sidecar-amd64:1.14.7
+k8s.gcr.io/k8s-dns-kube-dns-amd64:1.14.7
+k8s.gcr.io/k8s-dns-dnsmasq-nanny-amd64:1.14.7
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Usage:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;./save_images.py image_list output/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And the script will download an image named &lt;code&gt;repo1/repo2/image-name:v1&lt;/code&gt; as &lt;code&gt;image-name_v1.tar&lt;/code&gt; inside &lt;code&gt;output/&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h1 id=&#34;2-copy-the-saved-images-to-offline-environment&#34;&gt;2. Copy the saved images to offline environment&lt;/h1&gt;
+
+&lt;p&gt;Here, you need to have a way to upload the images to the offline environment. I created a FTP server, uploaded the tar files to the FTP server, then downloaded the images to another computer on the same network as the k8s nodes. You can use the master node &lt;code&gt;k8s01&lt;/code&gt; if you wish.&lt;/p&gt;
+
+&lt;h1 id=&#34;3-upload-images-to-private-registry&#34;&gt;3. Upload images to private registry&lt;/h1&gt;
+
+&lt;p&gt;To upload Docker images to a private registry, you need to first load the images, then re-tag them, and then push to your private registry.&lt;/p&gt;
+
+&lt;p&gt;Ex) Tar file named &lt;code&gt;kube-apiserver-amd64_v1.9.1.tar&lt;/code&gt; and image is &lt;code&gt;k8s.gcr.io/kube-apiserver-amd64:v1.9.1&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;docker load -i kube-apiserver-amd64_v1.9.1.tar
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can then check that the image is loaded properly and note that the docker image is tagged with the original repository name.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;docker images
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Re-tag the image to upload to another repository. You will see two images in &lt;code&gt;docker images&lt;/code&gt;, but both reference the same image. Substitute &lt;code&gt;&amp;lt;registry-url&amp;gt;:&amp;lt;port&amp;gt;&lt;/code&gt; and &lt;code&gt;&amp;lt;repo-name&amp;gt;&lt;/code&gt; to your private registry and your desired repo name (I used &lt;code&gt;kubernetes&lt;/code&gt;). I kept the image and version the same.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;docker tag k8s.gcr.io/kube-apiserver-amd64:v1.9.1 &amp;lt;registry-url&amp;gt;:&amp;lt;port&amp;gt;/kubernetes/kube-apiserver-amd64:v1.9.1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Push to your private registry. Login with your registry credentials if needed.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;docker push &amp;lt;registry-url&amp;gt;:&amp;lt;port&amp;gt;/kubernetes/kube-apiserver-amd64:v1.9.1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I again created two short python scripts, the first (&lt;code&gt;load_images.py&lt;/code&gt;) to load images and the second (&lt;code&gt;push_images.py&lt;/code&gt;) to push images.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;load_images.py&lt;/code&gt; first deletes all loaded Docker images, and then loads all tarballs in the specified directory (arg1). It deletes all loaded images to be used in conjuction with &lt;code&gt;push_images.py&lt;/code&gt;, which retags and pushes every loaded image.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;load_images.py&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;#!/usr/bin/env python3
+
+# arg1: tarball source directory
+
+import subprocess
+import os
+import sys
+
+print(&amp;quot;Deleting docker images...&amp;quot;)
+
+subprocess.call(&#39;docker rmi -f $(docker images -q)&#39;, shell=True)
+
+dir = &amp;quot;.&amp;quot;
+if len(sys.argv) &amp;gt; 1:
+    dir = sys.argv[1]
+print(&amp;quot;Directory: &amp;quot; + dir)
+
+for filename in os.listdir(dir):
+    if &amp;quot;.tar&amp;quot; in filename:
+        subprocess.call(&#39;docker load -i &#39; + dir + filename, shell=True)
+        print(&amp;quot;Loaded &amp;quot; + filename)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;push_images.py&lt;/code&gt; re-tags all images in your docker list, and pushes them to the private image repository, specifed by arg1. Change &lt;code&gt;&amp;lt;registry-url&amp;gt;:&amp;lt;port&amp;gt;&lt;/code&gt; to your private registry.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;push_images.py&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;#!/usr/bin/env python3
+
+# arg1: repository name
+
+import sys, re
+import subprocess
+
+private_repo = &amp;quot;&amp;lt;registry-url&amp;gt;:&amp;lt;port&amp;gt;&amp;quot;
+
+if len(sys.argv) &amp;lt; 2 :
+  print(&amp;quot;Need one argument: repository name. Exiting...&amp;quot;)
+  exit()
+
+subprocess.call([&#39;docker&#39;, &#39;login&#39;, private_repo])
+
+repo = sys.argv[1] if not sys.argv[1].endswith(&amp;quot;/&amp;quot;) else sys.argv[1][:-1]
+
+output = subprocess.check_output([&#39;docker&#39;, &#39;images&#39;, &#39;--format&#39;, &amp;quot;{{.Repository}}:{{.Tag}}&amp;quot;], universal_newlines=True)
+image_list = [i for i in output.split(&#39;\n&#39;) if i]
+
+for image in image_list:
+    if image.startswith(private_repo):
+        continue
+    fields = re.split(&#39;[/:]&#39;, image)
+    print(fields)
+    image_url = &amp;quot;{0}/{1}/{2}:{3}&amp;quot;.format(private_repo, repo, fields[-2], fields[-1])
+    subprocess.call([&#39;docker&#39;, &#39;tag&#39;, image, image_url])
+    subprocess.call([&#39;docker&#39;, &#39;push&#39;, image_url])
+    print(&amp;quot;------ Pushed {} to {}.&amp;quot;.format(image, image_url))
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;That&amp;rsquo;s it for this post. In the next post, I will finish up how to start up a 5-node kubernetes cluster in an offline environment.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>1. Prepare offline kubeadm install</title>
       <link>https://jypark0.github.io/post/prepare-for-kubernetes/</link>
       <pubDate>Mon, 06 Aug 2018 22:15:26 +0900</pubDate>
@@ -21,8 +256,8 @@
 &lt;p&gt;This is the first of three posts will focus on how to bring up a kubeadm cluster in an offline environment. I completed this a couple of months ago, when the latest k8s version was 1.9, but the concepts should translate over to newer versions.&lt;/p&gt;
 
 &lt;ol&gt;
-&lt;li&gt;Prepare for kubernetes (*)&lt;/li&gt;
-&lt;li&gt;Download required files on an Internet connected computer&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Prepare for kubernetes&lt;/strong&gt; [*]&lt;/li&gt;
+&lt;li&gt;Download required images for kubeadm&lt;/li&gt;
 &lt;li&gt;Initialize Kubeadm&lt;/li&gt;
 &lt;/ol&gt;
 

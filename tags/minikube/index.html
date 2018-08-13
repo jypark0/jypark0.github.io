@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="theme" content="hugo-academic">
+  <meta name="generator" content="Source Themes Academic 2.4.0">
   <meta name="generator" content="Hugo 0.45.1" />
   <meta name="author" content="Jung Yeon Park">
 
@@ -92,7 +92,7 @@
   <meta property="og:description" content="Software Engineer">
   <meta property="og:locale" content="en-us">
   
-  <meta property="og:updated_time" content="2018-07-29T15:41:26&#43;09:00">
+  <meta property="og:updated_time" content="2018-07-29T15:36:23&#43;09:00">
   
 
   
@@ -264,10 +264,14 @@
   
   
   <div>
-    <h2><a href="https://jypark0.github.io/project/kubernetes/">Kubernetes</a></h2>
+    <h2><a href="https://jypark0.github.io/post/minikube-proxy/">Setting up Minikube with corporate proxy</a></h2>
     <div class="article-style">
       
-      My experience with Kubernetes
+      Minikube is an easy way to get started with Kubernetes. It runs as a single-node Kubernetes cluster inside a VM, and includes almost all features of k8s, so you can try them out before installing them to an actual cluster.
+Supported addons include:
+ Kubernetes dashboard EFK Registry Ingress  and so on.
+(see <a href="https://github.com/kubernetes/minikube/blob/master/docs/addons.md" target="_blank">https://github.com/kubernetes/minikube/blob/master/docs/addons.md</a>)
+Minikube creates a VM that includes Kubernetes and a Docker daemon. To use containers inside this VM, you need to pass on the proxy settings to the docker daemon and install the certificate as well.
       
     </div>
   </div>
@@ -363,6 +367,26 @@
     
     
     <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    <script>
+      const search_index_filename = "/search.json";
+      const i18n = {
+        'placeholder': "Search...",
+        'no_results': "No results found"
+      };
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
     
 
     

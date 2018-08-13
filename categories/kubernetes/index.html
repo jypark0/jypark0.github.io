@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="theme" content="hugo-academic">
+  <meta name="generator" content="Source Themes Academic 2.4.0">
   <meta name="generator" content="Hugo 0.45.1" />
   <meta name="author" content="Jung Yeon Park">
 
@@ -92,7 +92,7 @@
   <meta property="og:description" content="Software Engineer">
   <meta property="og:locale" content="en-us">
   
-  <meta property="og:updated_time" content="2018-08-06T22:15:26&#43;09:00">
+  <meta property="og:updated_time" content="2018-08-13T20:43:15&#43;09:00">
   
 
   
@@ -264,11 +264,34 @@
   
   
   <div>
+    <h2><a href="https://jypark0.github.io/post/internet-download/">2. Required images for kubeadm</a></h2>
+    <div class="article-style">
+      
+      This is the second of three posts will focus on how to bring up a kubeadm cluster in an offline environment. Refer to the first post for information on how to set up k8s nodes and to install kubeadm.
+ Prepare for kubernetes Download required images for kubeadm [*] Initialize Kubeadm  This post focuses on the required Docker images for kubeadm and downloading/uploading them to our private registry.
+      
+    </div>
+  </div>
+  
+  <div>
     <h2><a href="https://jypark0.github.io/post/prepare-for-kubernetes/">1. Prepare offline kubeadm install</a></h2>
     <div class="article-style">
       
       This is the first of three posts will focus on how to bring up a kubeadm cluster in an offline environment. I completed this a couple of months ago, when the latest k8s version was 1.9, but the concepts should translate over to newer versions.
- Prepare for kubernetes (*) Download required files on an Internet connected computer Initialize Kubeadm  Kubeadm is one of the tools used to create a Kubernetes cluster.
+ Prepare for kubernetes [*] Download required images for kubeadm Initialize Kubeadm  Kubeadm is one of the tools used to create a Kubernetes cluster.
+      
+    </div>
+  </div>
+  
+  <div>
+    <h2><a href="https://jypark0.github.io/post/minikube-proxy/">Setting up Minikube with corporate proxy</a></h2>
+    <div class="article-style">
+      
+      Minikube is an easy way to get started with Kubernetes. It runs as a single-node Kubernetes cluster inside a VM, and includes almost all features of k8s, so you can try them out before installing them to an actual cluster.
+Supported addons include:
+ Kubernetes dashboard EFK Registry Ingress  and so on.
+(see <a href="https://github.com/kubernetes/minikube/blob/master/docs/addons.md" target="_blank">https://github.com/kubernetes/minikube/blob/master/docs/addons.md</a>)
+Minikube creates a VM that includes Kubernetes and a Docker daemon. To use containers inside this VM, you need to pass on the proxy settings to the docker daemon and install the certificate as well.
       
     </div>
   </div>
@@ -364,6 +387,26 @@
     
     
     <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    <script>
+      const search_index_filename = "/search.json";
+      const i18n = {
+        'placeholder': "Search...",
+        'no_results': "No results found"
+      };
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
     
 
     

@@ -13,13 +13,23 @@
     
     
     <item>
+      <title>2. Required images for kubeadm</title>
+      <link>https://jypark0.github.io/post/internet-download/</link>
+      <pubDate>Mon, 13 Aug 2018 20:43:15 +0900</pubDate>
+      
+      <guid>https://jypark0.github.io/post/internet-download/</guid>
+      <description>This is the second of three posts will focus on how to bring up a kubeadm cluster in an offline environment. Refer to the first post for information on how to set up k8s nodes and to install kubeadm.
+ Prepare for kubernetes Download required images for kubeadm [*] Initialize Kubeadm  This post focuses on the required Docker images for kubeadm and downloading/uploading them to our private registry.</description>
+    </item>
+    
+    <item>
       <title>1. Prepare offline kubeadm install</title>
       <link>https://jypark0.github.io/post/prepare-for-kubernetes/</link>
       <pubDate>Mon, 06 Aug 2018 22:15:26 +0900</pubDate>
       
       <guid>https://jypark0.github.io/post/prepare-for-kubernetes/</guid>
       <description>This is the first of three posts will focus on how to bring up a kubeadm cluster in an offline environment. I completed this a couple of months ago, when the latest k8s version was 1.9, but the concepts should translate over to newer versions.
- Prepare for kubernetes (*) Download required files on an Internet connected computer Initialize Kubeadm  Kubeadm is one of the tools used to create a Kubernetes cluster.</description>
+ Prepare for kubernetes [*] Download required images for kubeadm Initialize Kubeadm  Kubeadm is one of the tools used to create a Kubernetes cluster.</description>
     </item>
     
     <item>

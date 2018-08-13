@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 2.4.0">
+  <meta name="generator" content="Hugo 0.45.1" />
+  <meta name="author" content="Jung Yeon Park">
+
+  
+  
+  
+  
+    
+  
+  <meta name="description" content="This is the second of three posts will focus on how to bring up a kubeadm cluster in an offline environment. Refer to the first post for information on how to set up k8s nodes and to install kubeadm.
+ Prepare for kubernetes Download required images for kubeadm [*] Initialize Kubeadm  This post focuses on the required Docker images for kubeadm and downloading/uploading them to our private registry.">
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://jypark0.github.io/post/internet-download/">
+
+  
+
+
+  
+
+  
+  
+  
+  <meta name="theme-color" content="#0095eb">
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha512-6MXa8B6uaO18Hid6blRMetEIoPqHf7Ux1tnyIQdpt9qI5OACx7C+O3IVTr98vwGnlcg0LOLa02i9Y1HpVhlfiw==" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" integrity="sha256-ygkqlh3CYSUri3LhQxzdcm0n1EQvH2Y+U5S2idbLtxs=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" crossorigin="anonymous">
+        
+      
+    
+
+    
+
+    
+
+  
+
+  
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700%7cRoboto:400,400italic,700%7cRoboto&#43;Mono">
+  
+
+  <link rel="stylesheet" href="/styles.css">
+  
+
+  
+  
+  
+
+  
+  <link rel="alternate" href="https://jypark0.github.io/index.xml" type="application/rss+xml" title="Jung Yeon Park">
+  <link rel="feed" href="https://jypark0.github.io/index.xml" type="application/rss+xml" title="Jung Yeon Park">
+  
+
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="https://jypark0.github.io/post/internet-download/">
+
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="og:site_name" content="Jung Yeon Park">
+  <meta property="og:url" content="https://jypark0.github.io/post/internet-download/">
+  <meta property="og:title" content="2. Required images for kubeadm | Jung Yeon Park">
+  <meta property="og:description" content="This is the second of three posts will focus on how to bring up a kubeadm cluster in an offline environment. Refer to the first post for information on how to set up k8s nodes and to install kubeadm.
+ Prepare for kubernetes Download required images for kubeadm [*] Initialize Kubeadm  This post focuses on the required Docker images for kubeadm and downloading/uploading them to our private registry.">
+  <meta property="og:locale" content="en-us">
+  
+  <meta property="article:published_time" content="2018-08-13T20:43:15&#43;09:00">
+  
+  <meta property="article:modified_time" content="2018-08-13T20:43:15&#43;09:00">
+  
+
+  
+
+  
+
+  <title>2. Required images for kubeadm | Jung Yeon Park</title>
+
+</head>
+<body id="top" data-spy="scroll" data-target="#toc" data-offset="71" >
+
+<nav class="navbar navbar-default navbar-fixed-top" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="navbar-header">
+      
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+              data-target=".navbar-collapse" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+      <a class="navbar-brand" href="/">Jung Yeon Park</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse">
+
+      
+      
+      <ul class="nav navbar-nav navbar-right">
+        
+
+        
+        
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#about">
+            
+            <span>Home</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+        
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#publications">
+            
+            <span>Publications</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+        
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#talks">
+            
+            <span>Talks</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+        
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#posts">
+            
+            <span>Posts</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+        
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#projects">
+            
+            <span>Projects</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+        
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#contact">
+            
+            <span>Contact</span>
+            
+          </a>
+        </li>
+
+        
+        
+      
+
+      
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+<article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+  <div class="article-container">
+    <h1 itemprop="name">2. Required images for kubeadm</h1>
+
+    
+
+<div class="article-metadata">
+
+  
+  
+  <span itemscope itemprop="author" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Jung Yeon Park">
+  </span>
+  
+
+  <span class="article-date">
+    
+    <meta content="2018-08-13 20:43:15 &#43;0900 KST" itemprop="datePublished">
+    <time datetime="2018-08-13 20:43:15 &#43;0900 KST" itemprop="dateModified">
+      Aug 13, 2018
+    </time>
+  </span>
+  <span itemscope itemprop="publisher" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Jung Yeon Park">
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    4 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fa fa-folder"></i>
+    
+    <a href="https://jypark0.github.io/categories/kubernetes/">kubernetes</a>, 
+    
+    <a href="https://jypark0.github.io/categories/kubeadm/">kubeadm</a>
+    
+  </span>
+  
+  
+
+  
+  
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=2.%20Required%20images%20for%20kubeadm&amp;url=https%3a%2f%2fjypark0.github.io%2fpost%2finternet-download%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fjypark0.github.io%2fpost%2finternet-download%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-facebook"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fjypark0.github.io%2fpost%2finternet-download%2f&amp;title=2.%20Required%20images%20for%20kubeadm"
+         target="_blank" rel="noopener">
+        <i class="fa fa-linkedin"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=https%3a%2f%2fjypark0.github.io%2fpost%2finternet-download%2f&amp;title=2.%20Required%20images%20for%20kubeadm"
+         target="_blank" rel="noopener">
+        <i class="fa fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=2.%20Required%20images%20for%20kubeadm&amp;body=https%3a%2f%2fjypark0.github.io%2fpost%2finternet-download%2f">
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+
+    <div class="article-style" itemprop="articleBody">
+      
+
+<p>This is the second of three posts will focus on how to bring up a kubeadm cluster in an offline environment. Refer to the <a href="https://jypark0.github.io/post/prepare-for-kubernetes/" target="_blank">first post</a> for information on how to set up k8s nodes and to install kubeadm.</p>
+
+<ol>
+<li>Prepare for kubernetes</li>
+<li><strong>Download required images for kubeadm</strong> [*]</li>
+<li>Initialize Kubeadm</li>
+</ol>
+
+<p>This post focuses on the required Docker images for kubeadm and downloading/uploading them to our private registry.</p>
+
+<h1 id="1-download-docker-images-from-an-internet-connected-computer">1. Download docker images from an internet connected computer</h1>
+
+<p>First, install docker on an internet connected computer. I installed Virtualbox and booted up a CentOS 7 VM and installed docker as described on their <a href="https://docs.docker.com/install/linux/docker-ce/centos/#install-using-the-repository" target="_blank">website</a>.</p>
+
+<p>The required images for kubeadm are listed <a href="https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-init/" target="_blank">here</a>. I have copied the table over here for reference.</p>
+
+<table>
+<thead>
+<tr>
+<th>Image Name</th>
+<th>v1.9 release branch version</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><code>k8s.gcr.io/kube-apiserver-${ARCH}</code></td>
+<td>v1.9.x</td>
+</tr>
+
+<tr>
+<td><code>k8s.gcr.io/kube-controller-manager-${ARCH}</code></td>
+<td>v1.9.x</td>
+</tr>
+
+<tr>
+<td><code>k8s.gcr.io/kube-scheduler-${ARCH}</code></td>
+<td>v1.9.x</td>
+</tr>
+
+<tr>
+<td><code>k8s.gcr.io/kube-proxy-${ARCH}</code></td>
+<td>v1.9.x</td>
+</tr>
+
+<tr>
+<td><code>k8s.gcr.io/etcd-${ARCH}</code></td>
+<td>3.1.10</td>
+</tr>
+
+<tr>
+<td><code>k8s.gcr.io/pause-${ARCH}</code></td>
+<td>3.0</td>
+</tr>
+
+<tr>
+<td><code>k8s.gcr.io/k8s-dns-sidecar-${ARCH}</code></td>
+<td>1.14.7</td>
+</tr>
+
+<tr>
+<td><code>k8s.gcr.io/k8s-dns-kube-dns-${ARCH}</code></td>
+<td>1.14.7</td>
+</tr>
+
+<tr>
+<td><code>k8s.gcr.io/k8s-dns-dnsmasq-nanny-${ARCH}</code></td>
+<td>1.14.7</td>
+</tr>
+</tbody>
+</table>
+
+<p>I created a short python script to read images from a list, save them as tarballs in the specified output directory. It&rsquo;s very basic but works well enough.</p>
+
+<p><code>save.images.py</code></p>
+
+<pre><code class="language-python">#!/usr/bin/env python
+
+# arg1: image list file
+# arg2: tarball output directory
+
+import os, sys, re, subprocess
+
+if len(sys.argv[1]) &gt; 1:
+  image_list_file = sys.argv[1]
+
+rootdir = &quot;&quot;
+if len(sys.argv[2]) &gt; 1:
+  rootdir = os.path.abspath(sys.argv[2])
+
+if not os.path.exists(rootdir):
+  os.makedirs(rootdir)
+
+with open(image_list_file) as file:
+  data = [line.strip() for line in file.readlines() if line.strip()]
+
+for line in data:
+  image = re.split('[/:]', line)
+  tar_name = os.path.join(rootdir, image[-2] + &quot;_&quot; + image[-1] + &quot;.tar&quot;)
+  if not os.path.exists(tar_name):
+    subprocess.call([&quot;docker&quot;, &quot;pull&quot;, line])
+    subprocess.call([&quot;docker&quot;, &quot;save&quot;, line, &quot;-o&quot;, tar_name])
+    subprocess.call([&quot;docker&quot;, &quot;rmi&quot;, line])
+    print(&quot;\n&quot;)
+  else:
+    print(&quot;\n### &quot; + line + &quot; already exists. Skipping ...\n&quot;)
+</code></pre>
+
+<p>Here is the exact image list I used. There shouldn&rsquo;t be any spaces or empty lines in this file.</p>
+
+<p><code>image_list</code></p>
+
+<pre><code class="language-bash">k8s.gcr.io/kube-apiserver-amd64:v1.9.1
+k8s.gcr.io/kube-controller-manager-amd64:v1.9.1
+k8s.gcr.io/kube-scheduler-amd64:v1.9.1
+k8s.gcr.io/kube-proxy-amd64:v1.9.1
+k8s.gcr.io/etcd-amd64:3.1.10
+k8s.gcr.io/pause-amd64:3.0
+k8s.gcr.io/k8s-dns-sidecar-amd64:1.14.7
+k8s.gcr.io/k8s-dns-kube-dns-amd64:1.14.7
+k8s.gcr.io/k8s-dns-dnsmasq-nanny-amd64:1.14.7
+</code></pre>
+
+<p>Usage:</p>
+
+<pre><code class="language-bash">./save_images.py image_list output/
+</code></pre>
+
+<p>And the script will download an image named <code>repo1/repo2/image-name:v1</code> as <code>image-name_v1.tar</code> inside <code>output/</code>.</p>
+
+<h1 id="2-copy-the-saved-images-to-offline-environment">2. Copy the saved images to offline environment</h1>
+
+<p>Here, you need to have a way to upload the images to the offline environment. I created a FTP server, uploaded the tar files to the FTP server, then downloaded the images to another computer on the same network as the k8s nodes. You can use the master node <code>k8s01</code> if you wish.</p>
+
+<h1 id="3-upload-images-to-private-registry">3. Upload images to private registry</h1>
+
+<p>To upload Docker images to a private registry, you need to first load the images, then re-tag them, and then push to your private registry.</p>
+
+<p>Ex) Tar file named <code>kube-apiserver-amd64_v1.9.1.tar</code> and image is <code>k8s.gcr.io/kube-apiserver-amd64:v1.9.1</code>.</p>
+
+<pre><code class="language-bash">docker load -i kube-apiserver-amd64_v1.9.1.tar
+</code></pre>
+
+<p>You can then check that the image is loaded properly and note that the docker image is tagged with the original repository name.</p>
+
+<pre><code class="language-bash">docker images
+</code></pre>
+
+<p>Re-tag the image to upload to another repository. You will see two images in <code>docker images</code>, but both reference the same image. Substitute <code>&lt;registry-url&gt;:&lt;port&gt;</code> and <code>&lt;repo-name&gt;</code> to your private registry and your desired repo name (I used <code>kubernetes</code>). I kept the image and version the same.</p>
+
+<pre><code class="language-bash">docker tag k8s.gcr.io/kube-apiserver-amd64:v1.9.1 &lt;registry-url&gt;:&lt;port&gt;/kubernetes/kube-apiserver-amd64:v1.9.1
+</code></pre>
+
+<p>Push to your private registry. Login with your registry credentials if needed.</p>
+
+<pre><code class="language-bash">docker push &lt;registry-url&gt;:&lt;port&gt;/kubernetes/kube-apiserver-amd64:v1.9.1
+</code></pre>
+
+<p>I again created two short python scripts, the first (<code>load_images.py</code>) to load images and the second (<code>push_images.py</code>) to push images.</p>
+
+<p><code>load_images.py</code> first deletes all loaded Docker images, and then loads all tarballs in the specified directory (arg1). It deletes all loaded images to be used in conjuction with <code>push_images.py</code>, which retags and pushes every loaded image.</p>
+
+<p><code>load_images.py</code></p>
+
+<pre><code class="language-python">#!/usr/bin/env python3
+
+# arg1: tarball source directory
+
+import subprocess
+import os
+import sys
+
+print(&quot;Deleting docker images...&quot;)
+
+subprocess.call('docker rmi -f $(docker images -q)', shell=True)
+
+dir = &quot;.&quot;
+if len(sys.argv) &gt; 1:
+    dir = sys.argv[1]
+print(&quot;Directory: &quot; + dir)
+
+for filename in os.listdir(dir):
+    if &quot;.tar&quot; in filename:
+        subprocess.call('docker load -i ' + dir + filename, shell=True)
+        print(&quot;Loaded &quot; + filename)
+</code></pre>
+
+<p><code>push_images.py</code> re-tags all images in your docker list, and pushes them to the private image repository, specifed by arg1. Change <code>&lt;registry-url&gt;:&lt;port&gt;</code> to your private registry.</p>
+
+<p><code>push_images.py</code></p>
+
+<pre><code class="language-python">#!/usr/bin/env python3
+
+# arg1: repository name
+
+import sys, re
+import subprocess
+
+private_repo = &quot;&lt;registry-url&gt;:&lt;port&gt;&quot;
+
+if len(sys.argv) &lt; 2 :
+  print(&quot;Need one argument: repository name. Exiting...&quot;)
+  exit()
+
+subprocess.call(['docker', 'login', private_repo])
+
+repo = sys.argv[1] if not sys.argv[1].endswith(&quot;/&quot;) else sys.argv[1][:-1]
+
+output = subprocess.check_output(['docker', 'images', '--format', &quot;{{.Repository}}:{{.Tag}}&quot;], universal_newlines=True)
+image_list = [i for i in output.split('\n') if i]
+
+for image in image_list:
+    if image.startswith(private_repo):
+        continue
+    fields = re.split('[/:]', image)
+    print(fields)
+    image_url = &quot;{0}/{1}/{2}:{3}&quot;.format(private_repo, repo, fields[-2], fields[-1])
+    subprocess.call(['docker', 'tag', image, image_url])
+    subprocess.call(['docker', 'push', image_url])
+    print(&quot;------ Pushed {} to {}.&quot;.format(image, image_url))
+
+</code></pre>
+
+<p>That&rsquo;s it for this post. In the next post, I will finish up how to start up a 5-node kubernetes cluster in an offline environment.</p>
+
+    </div>
+
+    
+
+
+<div class="article-tags">
+  
+  <a class="label label-default" href="https://jypark0.github.io/tags/kubernetes/">kubernetes</a>
+  
+  <a class="label label-default" href="https://jypark0.github.io/tags/kubeadm/">kubeadm</a>
+  
+</div>
+
+
+
+
+    
+    
+    <div class="article-widget">
+      <div class="hr-light"></div>
+      <h3>Related</h3>
+      <ul>
+        
+        <li><a href="/post/prepare-for-kubernetes/">1. Prepare offline kubeadm install</a></li>
+        
+        <li><a href="/post/minikube-proxy/">Setting up Minikube with corporate proxy</a></li>
+        
+      </ul>
+    </div>
+    
+
+    
+
+    
+
+
+  </div>
+</article>
+
+<footer class="site-footer">
+  <div class="container">
+
+    
+
+    <p class="powered-by">
+
+      &copy; 2018 &middot; 
+
+      Powered by the
+      <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+      <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+      <span class="pull-right" aria-hidden="true">
+        <a href="#" id="back_to_top">
+          <span class="button_icon">
+            <i class="fa fa-chevron-up fa-2x"></i>
+          </span>
+        </a>
+      </span>
+
+    </p>
+  </div>
+</footer>
+
+
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close btn-large" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Cite</h4>
+      </div>
+      <div>
+        <pre><code class="modal-body tex"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary btn-outline js-copy-cite" href="#" target="_blank">
+          <i class="fa fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-primary btn-outline js-download-cite" href="#" target="_blank">
+          <i class="fa fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+    
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.3/imagesloaded.pkgd.min.js" integrity="sha512-umsR78NN0D23AzgoZ11K7raBD+R6hqKojyBZs1w8WvYlsI+QuKRGBx3LFCwhatzBunCjDuJpDHwxD13sLMbpRA==" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha512-iztkobsvnjKfAtTNdHkGVjAYTrrtlC7mGp/54c40wowO7LhURYl3gVzzcEqGl/qKXQltJ2HwMrdLcNUdo+N/RQ==" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.4/isotope.pkgd.min.js" integrity="sha512-VDBOIlDbuC4VWxGJNmuFRQ0Li0SKkDpmGyuhAG5LTDLd/dJ/S0WMVxriR2Y+CyPL5gzjpN4f/6iqWVBJlht0tQ==" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" integrity="sha256-X5PoE3KU5l+JcX+w09p/wHl9AzK333C4hJ2I9S5mD4M=" crossorigin="anonymous"></script>
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+        
+      
+
+      
+      
+    
+
+    <script src="/js/hugo-academic.js"></script>
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    <script>
+      const search_index_filename = "/search.json";
+      const i18n = {
+        'placeholder': "Search...",
+        'no_results': "No results found"
+      };
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+
+  </body>
+</html>
+

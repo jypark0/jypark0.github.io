@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Kubernetes on Jung Yeon Park</title>
-    <link>https://jypark0.github.io/categories/kubernetes/</link>
-    <description>Recent content in Kubernetes on Jung Yeon Park</description>
+    <title>Kubeadm on Jung Yeon Park</title>
+    <link>https://jypark0.github.io/tags/kubeadm/</link>
+    <description>Recent content in Kubeadm on Jung Yeon Park</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2018</copyright>
     <lastBuildDate>Mon, 13 Aug 2018 20:43:15 +0900</lastBuildDate>
     
-	<atom:link href="https://jypark0.github.io/categories/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://jypark0.github.io/tags/kubeadm/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -30,19 +30,6 @@
       <guid>https://jypark0.github.io/post/prepare-for-kubernetes/</guid>
       <description>This is the first of three posts will focus on how to bring up a kubeadm cluster in an offline environment. I completed this a couple of months ago, when the latest k8s version was 1.9, but the concepts should translate over to newer versions.
  Prepare for kubernetes [*] Download required images for kubeadm Initialize Kubeadm  Kubeadm is one of the tools used to create a Kubernetes cluster.</description>
-    </item>
-    
-    <item>
-      <title>Setting up Minikube with corporate proxy</title>
-      <link>https://jypark0.github.io/post/minikube-proxy/</link>
-      <pubDate>Sun, 29 Jul 2018 15:36:23 +0900</pubDate>
-      
-      <guid>https://jypark0.github.io/post/minikube-proxy/</guid>
-      <description>Minikube is an easy way to get started with Kubernetes. It runs as a single-node Kubernetes cluster inside a VM, and includes almost all features of k8s, so you can try them out before installing them to an actual cluster.
-Supported addons include:
- Kubernetes dashboard EFK Registry Ingress  and so on.
-(see https://github.com/kubernetes/minikube/blob/master/docs/addons.md)
-Minikube creates a VM that includes Kubernetes and a Docker daemon. To use containers inside this VM, you need to pass on the proxy settings to the docker daemon and install the certificate as well.</description>
     </item>
     
   </channel>
