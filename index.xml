@@ -11,6 +11,227 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Kubeadm Init</title>
+      <link>https://jypark0.github.io/post/kubeadm-init/</link>
+      <pubDate>Mon, 20 Aug 2018 21:06:15 +0900</pubDate>
+      
+      <guid>https://jypark0.github.io/post/kubeadm-init/</guid>
+      <description>
+
+&lt;p&gt;This is the last of three posts will focus on how to bring up a kubeadm cluster in an air-gapped environment.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Prepare for kubernetes&lt;/li&gt;
+&lt;li&gt;Download required images for kubeadm&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Initialize Kubeadm&lt;/strong&gt; [*]&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;This post focuses on initializing kubeadm, install overlay networking, and join nodes to the initialized cluster.&lt;/p&gt;
+
+&lt;p&gt;You should have:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Five VMs (1 for master, 4 for workers) and prepared them for a kubeadm install&lt;/li&gt;
+&lt;li&gt;Downloaded the required docker images&lt;/li&gt;
+&lt;li&gt;Uploaded the images to a private repository&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Please refer to the &lt;a href=&#34;https://jypark0.github.io/post/prepare-for-kubernetes/&#34; target=&#34;_blank&#34;&gt;first&lt;/a&gt; for information on how to set up k8s nodes and the &lt;a href=&#34;https://jypark0.github.io/post/internet-download/&#34; target=&#34;_blank&#34;&gt;second&lt;/a&gt; to download required images from the internet.&lt;/p&gt;
+
+&lt;h1 id=&#34;1-kubeadm-init&#34;&gt;1. Kubeadm init&lt;/h1&gt;
+
+&lt;h2 id=&#34;1-1-config-file&#34;&gt;1.1 config file&lt;/h2&gt;
+
+&lt;p&gt;Kubeadm initialized a cluster with the command &lt;code&gt;kubeadm init&lt;/code&gt;. We will use a config file to pass certain options to this command. Note that this config file is still considered alpha, but it worked well in my case. (&lt;a href=&#34;https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-init/&#34; target=&#34;_blank&#34;&gt;https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-init/&lt;/a&gt;)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cat &amp;gt; kubeadm_init_config.yaml &amp;lt;&amp;lt;EOF
+apiVersion: kubeadm.k8s.io/v1alpha1
+kind: MasterConfiguration
+api:
+  advertiseAddress: &amp;quot;192.168.0.1&amp;quot;
+networking:
+  # Flannel
+  podSubnet: 10.244.0.0/16
+kubernetesVersion: &amp;quot;v1.9.1&amp;quot;
+imageRepository: &amp;quot;&amp;lt;private-registry&amp;gt;:&amp;lt;port&amp;gt;/&amp;lt;repo-name&amp;gt;&amp;quot;
+EOF
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In the config file, I added the master &lt;code&gt;k8s01&lt;/code&gt; IP: 192.168.0.1 to &lt;code&gt;advertiseAddress&lt;/code&gt;. You may not need this option.&lt;/p&gt;
+
+&lt;p&gt;For overlay networking, I chose &lt;code&gt;flannel&lt;/code&gt; as it was the simplest to deploy. As an aside, if I were to start over on my cluster, I might have gone with &lt;code&gt;calico&lt;/code&gt; for its rich support of Network Policies. You can use any other pod network add-on such as calico, canal, or weave net. If you choose &lt;code&gt;flannel&lt;/code&gt; make sure to set the &lt;code&gt;podSubnet&lt;/code&gt; to &lt;code&gt;10.244.0.0/16&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Set &lt;code&gt;imageRepository&lt;/code&gt; to use the private container registry.&lt;/p&gt;
+
+&lt;h2 id=&#34;1-2-pause-container&#34;&gt;1.2 Pause container&lt;/h2&gt;
+
+&lt;p&gt;You should have noticed that we downloaded an image named &lt;code&gt;pause&lt;/code&gt; in the previous post. Pause containers are used to set up the network namespaces for pods and serves as the &amp;ldquo;parent container&amp;rdquo; for all containers of a pod. Please see this &lt;a href=&#34;https://www.ianlewis.org/en/almighty-pause-container&#34; target=&#34;_blank&#34;&gt;article&lt;/a&gt; for an in-depth discussion of what it exactly does.&lt;/p&gt;
+
+&lt;p&gt;The default location of pause container image is set in &lt;code&gt;/etc/systemd/system/kubelet.service.d/10-kubeadm.conf&lt;/code&gt; as &lt;code&gt;gcr.io/google_containers/pause-amd64:3.0&lt;/code&gt;. To use a private image repository, you need to edit the systemd unit file, or add another one as&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;[Service]
+Environment=&amp;quot;KUBELET_EXTRA_ARGS=--pod-infra-container-image=&amp;lt;your-image&amp;gt;&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;See issue &lt;a href=&#34;https://github.com/kubernetes/kubeadm/issues/257#issuecomment-298007840&#34; target=&#34;_blank&#34;&gt;257&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;I decided to preload the pause images on all nodes instead of creating a new systemd file, but you might want to consider this option if you have many nodes.&lt;/p&gt;
+
+&lt;p&gt;Run the command on all 5 nodes:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;docker load -i pause-amd64_3.0.tar
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;1-3-add-k8s-admin-user&#34;&gt;1.3 Add k8s admin user&lt;/h2&gt;
+
+&lt;p&gt;For administering your k8s cluster with &lt;code&gt;kubectl&lt;/code&gt;, you probably want to use a regular user for security reasons.&lt;/p&gt;
+
+&lt;p&gt;Create a new user and set password:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;useradd k8sadmin
+passwd k8sadmin
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To control docker with this user, add it to the &lt;code&gt;docker&lt;/code&gt; group and restart docker:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;usermod -aG docker k8sadmin
+systemctl restart docker
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;1-4-kubeadm-init&#34;&gt;1.4 Kubeadm init&lt;/h2&gt;
+
+&lt;p&gt;Using the init config file from #1, we will now initialize our kubeadm master. &lt;code&gt;kubeadm init&lt;/code&gt; first checks that the k8s master is ready to run Kubernetes and then downloads control plane images. Make sure that you have prepared the nodes as outlined in the &lt;a href=&#34;https://jypark0.github.io/post/prepare-for-kubernetes/&#34; target=&#34;_blank&#34;&gt;first post&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;On &lt;code&gt;k8s01&lt;/code&gt; as root:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;kubeadm init --config kubeadm_init_config.yaml
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you were successful, it should give you some commands to run for your regular &lt;code&gt;k8sadmin&lt;/code&gt; user.
+Follow these commands.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;Your Kubernetes master has initialized successfully!
+
+To start using your cluster, you need to run (as a regular user):
+
+  mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can now run &lt;code&gt;kubectl&lt;/code&gt; with the &lt;code&gt;k8sadmin&lt;/code&gt; user on &lt;code&gt;k8s01&lt;/code&gt;. We will use &lt;code&gt;k8sadmin&lt;/code&gt; throughout for &lt;code&gt;kubectl&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;kubectl get nodes
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The nodes are still not ready as we need to install a pod network.&lt;/p&gt;
+
+&lt;h1 id=&#34;2-flannel&#34;&gt;2. Flannel&lt;/h1&gt;
+
+&lt;p&gt;To install flannel, you can follow the instructions &lt;a href=&#34;https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/#pod-network&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt;. Consult &lt;a href=&#34;https://coreos.com/flannel/docs/latest/kubernetes.html&#34; target=&#34;_blank&#34;&gt;flannel&amp;rsquo;s github repository&lt;/a&gt; for more detailed information.&lt;/p&gt;
+
+&lt;h2 id=&#34;2-1-yaml&#34;&gt;2.1 YAML&lt;/h2&gt;
+
+&lt;p&gt;Flannel is installed like any other kubernetes component, using a yaml file. Yaml files describe kubernetes objects. The file is &lt;a href=&#34;https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt;. You can see that it installs some RBAC components and installs flannel as a &lt;code&gt;DaemonSet&lt;/code&gt;. Copy the yaml file onto &lt;code&gt;k8s01&lt;/code&gt;. Make sure to only copy the parts for &lt;code&gt;amd64&lt;/code&gt; in &lt;code&gt;DaemonSet&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;As I will mainly use &lt;code&gt;k8sadmin&lt;/code&gt; to administer my cluster, I created a &lt;code&gt;yaml&lt;/code&gt; directory in the home folder and organized yaml files there.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;mkdir -p $HOME/yaml/flannel
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Open &lt;code&gt;flannel.yaml&lt;/code&gt; and check which images are required. Simply look for the &lt;code&gt;image&lt;/code&gt; directive. Sometimes, the image directive is split into &lt;code&gt;repository&lt;/code&gt; and &lt;code&gt;tag&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-yaml&#34;&gt;image: quay.io/coreos/flannel:v0.10.0-amd64
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This tells you which images you need to download from the internet and upload to our private registry.&lt;/p&gt;
+
+&lt;p&gt;You should also look over this yaml file and try to understand what each directive means. For starters, the &lt;code&gt;---&lt;/code&gt; allows you to concatenate several yaml files as one.  &lt;code&gt;kind&lt;/code&gt; tells you the kind of object the yaml is referring to, &lt;code&gt;metadata.name&lt;/code&gt; names the object, and &lt;code&gt;metadata.namespace&lt;/code&gt; specifies which namespace. The &lt;code&gt;spec&lt;/code&gt; format specifies options or fields for that particular kind of object. Please see &lt;a href=&#34;https://kubernetes.io/docs/concepts/overview/working-with-objects/kubernetes-objects/&#34; target=&#34;_blank&#34;&gt;https://kubernetes.io/docs/concepts/overview/working-with-objects/kubernetes-objects/&lt;/a&gt; for more details.&lt;/p&gt;
+
+&lt;h2 id=&#34;2-2-download-images&#34;&gt;2.2 Download images&lt;/h2&gt;
+
+&lt;p&gt;Following the example in the second post, pull the required image, save it as a &lt;code&gt;.tar&lt;/code&gt; file and upload to the private registry.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;docker pull quay.io/coreos/flannel:v0.10.0-amd64
+docker save quay.io/coreos/flannel:v0.10.0-amd64 -o flannel_v0.10.0-amd64.tar
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Upload to the private network and push to private registry.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;docker load -i flannel_v0.10.0-amd64.tar
+docker tag quay.io/coreos/flannel:v0.10.0-amd64 &amp;lt;private-registry&amp;gt;:&amp;lt;port&amp;gt;/flannel/flannel:v0.10.0-amd64
+docker push &amp;lt;private-registry&amp;gt;:&amp;lt;port&amp;gt;/flannel/flannel:v0.10.0-amd64
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;2-3-edit-yaml&#34;&gt;2.3 Edit YAML&lt;/h2&gt;
+
+&lt;p&gt;Go back to the &lt;code&gt;flannel.yaml&lt;/code&gt; and edit the &lt;code&gt;image&lt;/code&gt; directive to look to your private registry.
+You may not need the full url as we edited the docker &lt;code&gt;daemon.json&lt;/code&gt; to automatically look first in our private registry, but I always add it just in case.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-yaml&#34;&gt;image: &amp;lt;private-registry&amp;gt;:&amp;lt;port&amp;gt;/flannel:v0.10.0-amd64
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;2-4-comments&#34;&gt;2.4 Comments&lt;/h2&gt;
+
+&lt;p&gt;The bad thing about an air-gapped environment is that you will repeat the above process &lt;em&gt;many&lt;/em&gt;, &lt;strong&gt;many&lt;/strong&gt; times, especially for installing complex components (i.e. Prometheus or EFK) that require multiple images and yaml files. &lt;code&gt;Helm&lt;/code&gt;, which I will discuss in another post, doesn&amp;rsquo;t really help with this process as you still need to download the images and edit other files, which is a pain. This is the reason I created simple scripts to get over this process as quickly as possible.&lt;/p&gt;
+
+&lt;h2 id=&#34;2-5-install-flannel&#34;&gt;2.5 Install Flannel&lt;/h2&gt;
+
+&lt;p&gt;Installing flannel is one command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;kubectl apply -f flannel.yaml
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Note that we installed flannel in the &lt;code&gt;kube-system&lt;/code&gt; namespace as described &lt;code&gt;flannel.yaml&lt;/code&gt;. Namespaces separate our k8s cluster as multiple virtual clusters. I usually use &lt;code&gt;kube-system&lt;/code&gt; for system components. You can check that the DaemonSet is deployed properly with:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;kubectl -n kube-system get daemonset
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It should be in the &lt;code&gt;Running&lt;/code&gt; state.&lt;/p&gt;
+
+&lt;h1 id=&#34;3-join-nodes&#34;&gt;3. Join nodes&lt;/h1&gt;
+
+&lt;h2 id=&#34;3-1-pause-image&#34;&gt;3.1 Pause image&lt;/h2&gt;
+
+&lt;p&gt;To join nodes to &lt;code&gt;k8s01&lt;/code&gt;, you need to preload the pause images.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;docker load -i pause-amd64_3.0.tar
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;3-2-join-nodes&#34;&gt;3.2 Join nodes&lt;/h2&gt;
+
+&lt;p&gt;After &lt;code&gt;kubeadm init&lt;/code&gt; you should have seen this in the output:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;You can now join any number of machines by running the following on each node
+as root:
+
+  kubeadm join --token &amp;lt;token&amp;gt; &amp;lt;master-ip&amp;gt;:&amp;lt;master-port&amp;gt; --discovery-token-ca-cert-hash sha256:&amp;lt;hash&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Run this command on all nodes.&lt;/p&gt;
+
+&lt;h2 id=&#34;3-3-if-token-expired&#34;&gt;3.3 If token expired&lt;/h2&gt;
+
+&lt;p&gt;If the token expired, or you lost the output, create a new token on &lt;code&gt;k8s01&lt;/code&gt; as root&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;kubeadm token create --print-join-command
+kubeadm token list
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This should print the join command again.&lt;/p&gt;
+
+&lt;h2 id=&#34;3-4-check-that-nodes-have-joined&#34;&gt;3.4 Check that nodes have joined&lt;/h2&gt;
+
+&lt;p&gt;On &lt;code&gt;k8s01&lt;/code&gt; as kube admin,&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;kubectl get nodes
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;They should all be in the &lt;code&gt;Ready&lt;/code&gt; state.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>2. Required images for kubeadm</title>
       <link>https://jypark0.github.io/post/internet-download/</link>
       <pubDate>Mon, 13 Aug 2018 20:43:15 +0900</pubDate>
@@ -69,7 +290,7 @@
 &lt;/tr&gt;
 
 &lt;tr&gt;
-&lt;td&gt;&lt;code&gt;k8s.gcr.io/pause-${ARCH}&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;gcr.io/google_containers/pause-${ARCH}&lt;/code&gt;&lt;/td&gt;
 &lt;td&gt;3.0&lt;/td&gt;
 &lt;/tr&gt;
 

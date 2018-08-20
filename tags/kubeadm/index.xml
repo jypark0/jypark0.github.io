@@ -7,10 +7,22 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2018</copyright>
-    <lastBuildDate>Mon, 13 Aug 2018 20:43:15 +0900</lastBuildDate>
+    <lastBuildDate>Mon, 20 Aug 2018 21:06:15 +0900</lastBuildDate>
     
 	<atom:link href="https://jypark0.github.io/tags/kubeadm/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Kubeadm Init</title>
+      <link>https://jypark0.github.io/post/kubeadm-init/</link>
+      <pubDate>Mon, 20 Aug 2018 21:06:15 +0900</pubDate>
+      
+      <guid>https://jypark0.github.io/post/kubeadm-init/</guid>
+      <description>This is the last of three posts will focus on how to bring up a kubeadm cluster in an air-gapped environment.
+ Prepare for kubernetes Download required images for kubeadm Initialize Kubeadm [*]  This post focuses on initializing kubeadm, install overlay networking, and join nodes to the initialized cluster.
+You should have:
+ Five VMs (1 for master, 4 for workers) and prepared them for a kubeadm install Downloaded the required docker images Uploaded the images to a private repository  Please refer to the first for information on how to set up k8s nodes and the second to download required images from the internet.</description>
+    </item>
     
     <item>
       <title>2. Required images for kubeadm</title>

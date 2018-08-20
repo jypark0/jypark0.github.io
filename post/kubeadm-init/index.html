@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 2.4.0">
+  <meta name="generator" content="Hugo 0.45.1" />
+  <meta name="author" content="Jung Yeon Park">
+
+  
+  
+  
+  
+    
+  
+  <meta name="description" content="This is the last of three posts will focus on how to bring up a kubeadm cluster in an air-gapped environment.
+ Prepare for kubernetes Download required images for kubeadm Initialize Kubeadm [*]  This post focuses on initializing kubeadm, install overlay networking, and join nodes to the initialized cluster.
+You should have:
+ Five VMs (1 for master, 4 for workers) and prepared them for a kubeadm install Downloaded the required docker images Uploaded the images to a private repository  Please refer to the first for information on how to set up k8s nodes and the second to download required images from the internet.">
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://jypark0.github.io/post/kubeadm-init/">
+
+  
+
+
+  
+
+  
+  
+  
+  <meta name="theme-color" content="#0095eb">
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha512-6MXa8B6uaO18Hid6blRMetEIoPqHf7Ux1tnyIQdpt9qI5OACx7C+O3IVTr98vwGnlcg0LOLa02i9Y1HpVhlfiw==" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" integrity="sha256-ygkqlh3CYSUri3LhQxzdcm0n1EQvH2Y+U5S2idbLtxs=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" crossorigin="anonymous">
+        
+      
+    
+
+    
+
+    
+
+  
+
+  
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700%7cRoboto:400,400italic,700%7cRoboto&#43;Mono">
+  
+
+  <link rel="stylesheet" href="/styles.css">
+  
+
+  
+  
+  
+
+  
+  <link rel="alternate" href="https://jypark0.github.io/index.xml" type="application/rss+xml" title="Jung Yeon Park">
+  <link rel="feed" href="https://jypark0.github.io/index.xml" type="application/rss+xml" title="Jung Yeon Park">
+  
+
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="https://jypark0.github.io/post/kubeadm-init/">
+
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="og:site_name" content="Jung Yeon Park">
+  <meta property="og:url" content="https://jypark0.github.io/post/kubeadm-init/">
+  <meta property="og:title" content="Kubeadm Init | Jung Yeon Park">
+  <meta property="og:description" content="This is the last of three posts will focus on how to bring up a kubeadm cluster in an air-gapped environment.
+ Prepare for kubernetes Download required images for kubeadm Initialize Kubeadm [*]  This post focuses on initializing kubeadm, install overlay networking, and join nodes to the initialized cluster.
+You should have:
+ Five VMs (1 for master, 4 for workers) and prepared them for a kubeadm install Downloaded the required docker images Uploaded the images to a private repository  Please refer to the first for information on how to set up k8s nodes and the second to download required images from the internet.">
+  <meta property="og:locale" content="en-us">
+  
+  <meta property="article:published_time" content="2018-08-20T21:06:15&#43;09:00">
+  
+  <meta property="article:modified_time" content="2018-08-20T21:06:15&#43;09:00">
+  
+
+  
+
+  
+
+  <title>Kubeadm Init | Jung Yeon Park</title>
+
+</head>
+<body id="top" data-spy="scroll" data-target="#toc" data-offset="71" >
+
+<nav class="navbar navbar-default navbar-fixed-top" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="navbar-header">
+      
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+              data-target=".navbar-collapse" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+      <a class="navbar-brand" href="/">Jung Yeon Park</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse">
+
+      
+      
+      <ul class="nav navbar-nav navbar-right">
+        
+
+        
+        
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#about">
+            
+            <span>Home</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+        
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#publications">
+            
+            <span>Publications</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+        
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#talks">
+            
+            <span>Talks</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+        
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#posts">
+            
+            <span>Posts</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+        
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#contact">
+            
+            <span>Contact</span>
+            
+          </a>
+        </li>
+
+        
+        
+      
+
+      
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+<article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+  <div class="article-container">
+    <h1 itemprop="name">Kubeadm Init</h1>
+
+    
+
+<div class="article-metadata">
+
+  
+  
+  <span itemscope itemprop="author" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Jung Yeon Park">
+  </span>
+  
+
+  <span class="article-date">
+    
+    <meta content="2018-08-20 21:06:15 &#43;0900 KST" itemprop="datePublished">
+    <time datetime="2018-08-20 21:06:15 &#43;0900 KST" itemprop="dateModified">
+      Aug 20, 2018
+    </time>
+  </span>
+  <span itemscope itemprop="publisher" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Jung Yeon Park">
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    6 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fa fa-folder"></i>
+    
+    <a href="https://jypark0.github.io/categories/kubernetes/">kubernetes</a>, 
+    
+    <a href="https://jypark0.github.io/categories/kubeadm/">kubeadm</a>
+    
+  </span>
+  
+  
+
+  
+  
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=Kubeadm%20Init&amp;url=https%3a%2f%2fjypark0.github.io%2fpost%2fkubeadm-init%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fjypark0.github.io%2fpost%2fkubeadm-init%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-facebook"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fjypark0.github.io%2fpost%2fkubeadm-init%2f&amp;title=Kubeadm%20Init"
+         target="_blank" rel="noopener">
+        <i class="fa fa-linkedin"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=https%3a%2f%2fjypark0.github.io%2fpost%2fkubeadm-init%2f&amp;title=Kubeadm%20Init"
+         target="_blank" rel="noopener">
+        <i class="fa fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=Kubeadm%20Init&amp;body=https%3a%2f%2fjypark0.github.io%2fpost%2fkubeadm-init%2f">
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+
+    <div class="article-style" itemprop="articleBody">
+      
+
+<p>This is the last of three posts will focus on how to bring up a kubeadm cluster in an air-gapped environment.</p>
+
+<ol>
+<li>Prepare for kubernetes</li>
+<li>Download required images for kubeadm</li>
+<li><strong>Initialize Kubeadm</strong> [*]</li>
+</ol>
+
+<p>This post focuses on initializing kubeadm, install overlay networking, and join nodes to the initialized cluster.</p>
+
+<p>You should have:</p>
+
+<ul>
+<li>Five VMs (1 for master, 4 for workers) and prepared them for a kubeadm install</li>
+<li>Downloaded the required docker images</li>
+<li>Uploaded the images to a private repository</li>
+</ul>
+
+<p>Please refer to the <a href="https://jypark0.github.io/post/prepare-for-kubernetes/" target="_blank">first</a> for information on how to set up k8s nodes and the <a href="https://jypark0.github.io/post/internet-download/" target="_blank">second</a> to download required images from the internet.</p>
+
+<h1 id="1-kubeadm-init">1. Kubeadm init</h1>
+
+<h2 id="1-1-config-file">1.1 config file</h2>
+
+<p>Kubeadm initialized a cluster with the command <code>kubeadm init</code>. We will use a config file to pass certain options to this command. Note that this config file is still considered alpha, but it worked well in my case. (<a href="https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-init/" target="_blank">https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-init/</a>)</p>
+
+<pre><code class="language-bash">cat &gt; kubeadm_init_config.yaml &lt;&lt;EOF
+apiVersion: kubeadm.k8s.io/v1alpha1
+kind: MasterConfiguration
+api:
+  advertiseAddress: &quot;192.168.0.1&quot;
+networking:
+  # Flannel
+  podSubnet: 10.244.0.0/16
+kubernetesVersion: &quot;v1.9.1&quot;
+imageRepository: &quot;&lt;private-registry&gt;:&lt;port&gt;/&lt;repo-name&gt;&quot;
+EOF
+</code></pre>
+
+<p>In the config file, I added the master <code>k8s01</code> IP: 192.168.0.1 to <code>advertiseAddress</code>. You may not need this option.</p>
+
+<p>For overlay networking, I chose <code>flannel</code> as it was the simplest to deploy. As an aside, if I were to start over on my cluster, I might have gone with <code>calico</code> for its rich support of Network Policies. You can use any other pod network add-on such as calico, canal, or weave net. If you choose <code>flannel</code> make sure to set the <code>podSubnet</code> to <code>10.244.0.0/16</code>.</p>
+
+<p>Set <code>imageRepository</code> to use the private container registry.</p>
+
+<h2 id="1-2-pause-container">1.2 Pause container</h2>
+
+<p>You should have noticed that we downloaded an image named <code>pause</code> in the previous post. Pause containers are used to set up the network namespaces for pods and serves as the &ldquo;parent container&rdquo; for all containers of a pod. Please see this <a href="https://www.ianlewis.org/en/almighty-pause-container" target="_blank">article</a> for an in-depth discussion of what it exactly does.</p>
+
+<p>The default location of pause container image is set in <code>/etc/systemd/system/kubelet.service.d/10-kubeadm.conf</code> as <code>gcr.io/google_containers/pause-amd64:3.0</code>. To use a private image repository, you need to edit the systemd unit file, or add another one as</p>
+
+<pre><code class="language-bash">[Service]
+Environment=&quot;KUBELET_EXTRA_ARGS=--pod-infra-container-image=&lt;your-image&gt;&quot;
+</code></pre>
+
+<p>See issue <a href="https://github.com/kubernetes/kubeadm/issues/257#issuecomment-298007840" target="_blank">257</a>.</p>
+
+<p>I decided to preload the pause images on all nodes instead of creating a new systemd file, but you might want to consider this option if you have many nodes.</p>
+
+<p>Run the command on all 5 nodes:</p>
+
+<pre><code class="language-bash">docker load -i pause-amd64_3.0.tar
+</code></pre>
+
+<h2 id="1-3-add-k8s-admin-user">1.3 Add k8s admin user</h2>
+
+<p>For administering your k8s cluster with <code>kubectl</code>, you probably want to use a regular user for security reasons.</p>
+
+<p>Create a new user and set password:</p>
+
+<pre><code class="language-bash">useradd k8sadmin
+passwd k8sadmin
+</code></pre>
+
+<p>To control docker with this user, add it to the <code>docker</code> group and restart docker:</p>
+
+<pre><code class="language-bash">usermod -aG docker k8sadmin
+systemctl restart docker
+</code></pre>
+
+<h2 id="1-4-kubeadm-init">1.4 Kubeadm init</h2>
+
+<p>Using the init config file from #1, we will now initialize our kubeadm master. <code>kubeadm init</code> first checks that the k8s master is ready to run Kubernetes and then downloads control plane images. Make sure that you have prepared the nodes as outlined in the <a href="https://jypark0.github.io/post/prepare-for-kubernetes/" target="_blank">first post</a>.</p>
+
+<p>On <code>k8s01</code> as root:</p>
+
+<pre><code class="language-bash">kubeadm init --config kubeadm_init_config.yaml
+</code></pre>
+
+<p>If you were successful, it should give you some commands to run for your regular <code>k8sadmin</code> user.
+Follow these commands.</p>
+
+<pre><code class="language-bash">Your Kubernetes master has initialized successfully!
+
+To start using your cluster, you need to run (as a regular user):
+
+  mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+</code></pre>
+
+<p>You can now run <code>kubectl</code> with the <code>k8sadmin</code> user on <code>k8s01</code>. We will use <code>k8sadmin</code> throughout for <code>kubectl</code>.</p>
+
+<pre><code class="language-bash">kubectl get nodes
+</code></pre>
+
+<p>The nodes are still not ready as we need to install a pod network.</p>
+
+<h1 id="2-flannel">2. Flannel</h1>
+
+<p>To install flannel, you can follow the instructions <a href="https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/#pod-network" target="_blank">here</a>. Consult <a href="https://coreos.com/flannel/docs/latest/kubernetes.html" target="_blank">flannel&rsquo;s github repository</a> for more detailed information.</p>
+
+<h2 id="2-1-yaml">2.1 YAML</h2>
+
+<p>Flannel is installed like any other kubernetes component, using a yaml file. Yaml files describe kubernetes objects. The file is <a href="https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml" target="_blank">here</a>. You can see that it installs some RBAC components and installs flannel as a <code>DaemonSet</code>. Copy the yaml file onto <code>k8s01</code>. Make sure to only copy the parts for <code>amd64</code> in <code>DaemonSet</code>.</p>
+
+<p>As I will mainly use <code>k8sadmin</code> to administer my cluster, I created a <code>yaml</code> directory in the home folder and organized yaml files there.</p>
+
+<pre><code class="language-bash">mkdir -p $HOME/yaml/flannel
+</code></pre>
+
+<p>Open <code>flannel.yaml</code> and check which images are required. Simply look for the <code>image</code> directive. Sometimes, the image directive is split into <code>repository</code> and <code>tag</code>.</p>
+
+<pre><code class="language-yaml">image: quay.io/coreos/flannel:v0.10.0-amd64
+</code></pre>
+
+<p>This tells you which images you need to download from the internet and upload to our private registry.</p>
+
+<p>You should also look over this yaml file and try to understand what each directive means. For starters, the <code>---</code> allows you to concatenate several yaml files as one.  <code>kind</code> tells you the kind of object the yaml is referring to, <code>metadata.name</code> names the object, and <code>metadata.namespace</code> specifies which namespace. The <code>spec</code> format specifies options or fields for that particular kind of object. Please see <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/kubernetes-objects/" target="_blank">https://kubernetes.io/docs/concepts/overview/working-with-objects/kubernetes-objects/</a> for more details.</p>
+
+<h2 id="2-2-download-images">2.2 Download images</h2>
+
+<p>Following the example in the second post, pull the required image, save it as a <code>.tar</code> file and upload to the private registry.</p>
+
+<pre><code class="language-bash">docker pull quay.io/coreos/flannel:v0.10.0-amd64
+docker save quay.io/coreos/flannel:v0.10.0-amd64 -o flannel_v0.10.0-amd64.tar
+</code></pre>
+
+<p>Upload to the private network and push to private registry.</p>
+
+<pre><code class="language-bash">docker load -i flannel_v0.10.0-amd64.tar
+docker tag quay.io/coreos/flannel:v0.10.0-amd64 &lt;private-registry&gt;:&lt;port&gt;/flannel/flannel:v0.10.0-amd64
+docker push &lt;private-registry&gt;:&lt;port&gt;/flannel/flannel:v0.10.0-amd64
+</code></pre>
+
+<h2 id="2-3-edit-yaml">2.3 Edit YAML</h2>
+
+<p>Go back to the <code>flannel.yaml</code> and edit the <code>image</code> directive to look to your private registry.
+You may not need the full url as we edited the docker <code>daemon.json</code> to automatically look first in our private registry, but I always add it just in case.</p>
+
+<pre><code class="language-yaml">image: &lt;private-registry&gt;:&lt;port&gt;/flannel:v0.10.0-amd64
+</code></pre>
+
+<h2 id="2-4-comments">2.4 Comments</h2>
+
+<p>The bad thing about an air-gapped environment is that you will repeat the above process <em>many</em>, <strong>many</strong> times, especially for installing complex components (i.e. Prometheus or EFK) that require multiple images and yaml files. <code>Helm</code>, which I will discuss in another post, doesn&rsquo;t really help with this process as you still need to download the images and edit other files, which is a pain. This is the reason I created simple scripts to get over this process as quickly as possible.</p>
+
+<h2 id="2-5-install-flannel">2.5 Install Flannel</h2>
+
+<p>Installing flannel is one command:</p>
+
+<pre><code class="language-bash">kubectl apply -f flannel.yaml
+</code></pre>
+
+<p>Note that we installed flannel in the <code>kube-system</code> namespace as described <code>flannel.yaml</code>. Namespaces separate our k8s cluster as multiple virtual clusters. I usually use <code>kube-system</code> for system components. You can check that the DaemonSet is deployed properly with:</p>
+
+<pre><code class="language-bash">kubectl -n kube-system get daemonset
+</code></pre>
+
+<p>It should be in the <code>Running</code> state.</p>
+
+<h1 id="3-join-nodes">3. Join nodes</h1>
+
+<h2 id="3-1-pause-image">3.1 Pause image</h2>
+
+<p>To join nodes to <code>k8s01</code>, you need to preload the pause images.</p>
+
+<pre><code class="language-bash">docker load -i pause-amd64_3.0.tar
+</code></pre>
+
+<h2 id="3-2-join-nodes">3.2 Join nodes</h2>
+
+<p>After <code>kubeadm init</code> you should have seen this in the output:</p>
+
+<pre><code class="language-bash">You can now join any number of machines by running the following on each node
+as root:
+
+  kubeadm join --token &lt;token&gt; &lt;master-ip&gt;:&lt;master-port&gt; --discovery-token-ca-cert-hash sha256:&lt;hash&gt;
+</code></pre>
+
+<p>Run this command on all nodes.</p>
+
+<h2 id="3-3-if-token-expired">3.3 If token expired</h2>
+
+<p>If the token expired, or you lost the output, create a new token on <code>k8s01</code> as root</p>
+
+<pre><code class="language-bash">kubeadm token create --print-join-command
+kubeadm token list
+</code></pre>
+
+<p>This should print the join command again.</p>
+
+<h2 id="3-4-check-that-nodes-have-joined">3.4 Check that nodes have joined</h2>
+
+<p>On <code>k8s01</code> as kube admin,</p>
+
+<pre><code class="language-bash">kubectl get nodes
+</code></pre>
+
+<p>They should all be in the <code>Ready</code> state.</p>
+
+    </div>
+
+    
+
+
+<div class="article-tags">
+  
+  <a class="label label-default" href="https://jypark0.github.io/tags/kubernetes/">kubernetes</a>
+  
+  <a class="label label-default" href="https://jypark0.github.io/tags/kubeadm/">kubeadm</a>
+  
+</div>
+
+
+
+
+    
+    
+    <div class="article-widget">
+      <div class="hr-light"></div>
+      <h3>Related</h3>
+      <ul>
+        
+        <li><a href="/post/internet-download/">2. Required images for kubeadm</a></li>
+        
+        <li><a href="/post/prepare-for-kubernetes/">1. Prepare offline kubeadm install</a></li>
+        
+        <li><a href="/post/minikube-proxy/">Setting up Minikube with corporate proxy</a></li>
+        
+      </ul>
+    </div>
+    
+
+    
+
+    
+
+
+  </div>
+</article>
+
+<footer class="site-footer">
+  <div class="container">
+
+    
+
+    <p class="powered-by">
+
+      &copy; 2018 &middot; 
+
+      Powered by the
+      <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+      <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+      <span class="pull-right" aria-hidden="true">
+        <a href="#" id="back_to_top">
+          <span class="button_icon">
+            <i class="fa fa-chevron-up fa-2x"></i>
+          </span>
+        </a>
+      </span>
+
+    </p>
+  </div>
+</footer>
+
+
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close btn-large" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Cite</h4>
+      </div>
+      <div>
+        <pre><code class="modal-body tex"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary btn-outline js-copy-cite" href="#" target="_blank">
+          <i class="fa fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-primary btn-outline js-download-cite" href="#" target="_blank">
+          <i class="fa fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+    
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.3/imagesloaded.pkgd.min.js" integrity="sha512-umsR78NN0D23AzgoZ11K7raBD+R6hqKojyBZs1w8WvYlsI+QuKRGBx3LFCwhatzBunCjDuJpDHwxD13sLMbpRA==" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha512-iztkobsvnjKfAtTNdHkGVjAYTrrtlC7mGp/54c40wowO7LhURYl3gVzzcEqGl/qKXQltJ2HwMrdLcNUdo+N/RQ==" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.4/isotope.pkgd.min.js" integrity="sha512-VDBOIlDbuC4VWxGJNmuFRQ0Li0SKkDpmGyuhAG5LTDLd/dJ/S0WMVxriR2Y+CyPL5gzjpN4f/6iqWVBJlht0tQ==" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" integrity="sha256-X5PoE3KU5l+JcX+w09p/wHl9AzK333C4hJ2I9S5mD4M=" crossorigin="anonymous"></script>
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+        
+      
+
+      
+      
+    
+
+    <script src="/js/hugo-academic.js"></script>
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    <script>
+      const search_index_filename = "/search.json";
+      const i18n = {
+        'placeholder': "Search...",
+        'no_results': "No results found"
+      };
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+
+  </body>
+</html>
+

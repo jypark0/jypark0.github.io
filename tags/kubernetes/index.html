@@ -92,7 +92,7 @@
   <meta property="og:description" content="Software Engineer">
   <meta property="og:locale" content="en-us">
   
-  <meta property="og:updated_time" content="2018-08-13T20:43:15&#43;09:00">
+  <meta property="og:updated_time" content="2018-08-20T21:06:15&#43;09:00">
   
 
   
@@ -236,13 +236,25 @@
 
 
 
-<div class="universal-wrapper">
+<div class="article-container">
 
   <h1>Kubernetes</h1>
 
   
 
   
+  
+  <div>
+    <h2><a href="https://jypark0.github.io/post/kubeadm-init/">Kubeadm Init</a></h2>
+    <div class="article-style">
+      
+      This is the last of three posts will focus on how to bring up a kubeadm cluster in an air-gapped environment.
+ Prepare for kubernetes Download required images for kubeadm Initialize Kubeadm [*]  This post focuses on initializing kubeadm, install overlay networking, and join nodes to the initialized cluster.
+You should have:
+ Five VMs (1 for master, 4 for workers) and prepared them for a kubeadm install Downloaded the required docker images Uploaded the images to a private repository  Please refer to the first for information on how to set up k8s nodes and the second to download required images from the internet.
+      
+    </div>
+  </div>
   
   <div>
     <h2><a href="https://jypark0.github.io/post/internet-download/">2. Required images for kubeadm</a></h2>
@@ -271,7 +283,7 @@
       Minikube is an easy way to get started with Kubernetes. It runs as a single-node Kubernetes cluster inside a VM, and includes almost all features of k8s, so you can try them out before installing them to an actual cluster.
 Supported addons include:
  Kubernetes dashboard EFK Registry Ingress  and so on.
-(see <a href="https://github.com/kubernetes/minikube/blob/master/docs/addons.md" target="_blank">https://github.com/kubernetes/minikube/blob/master/docs/addons.md</a>)
+(see https://github.com/kubernetes/minikube/blob/master/docs/addons.md)
 Minikube creates a VM that includes Kubernetes and a Docker daemon. To use containers inside this VM, you need to pass on the proxy settings to the docker daemon and install the certificate as well.
       
     </div>
