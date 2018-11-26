@@ -7,13 +7,12 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2018</copyright>
-    <lastBuildDate>Fri, 15 Sep 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://jypark0.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Computational tradeoff</title>
+      <title>computational tradeoff</title>
       <link>https://jypark0.github.io/tags/computational-tradeoff/</link>
       <pubDate>Fri, 15 Sep 2017 00:00:00 +0000</pubDate>
       
@@ -22,7 +21,7 @@
     </item>
     
     <item>
-      <title>Equipment models</title>
+      <title>equipment models</title>
       <link>https://jypark0.github.io/tags/equipment-models/</link>
       <pubDate>Fri, 15 Sep 2017 00:00:00 +0000</pubDate>
       
@@ -31,7 +30,7 @@
     </item>
     
     <item>
-      <title>Kubeadm</title>
+      <title>kubeadm</title>
       <link>https://jypark0.github.io/tags/kubeadm/</link>
       <pubDate>Mon, 20 Aug 2018 21:06:15 +0900</pubDate>
       
@@ -40,7 +39,7 @@
     </item>
     
     <item>
-      <title>Kubernetes</title>
+      <title>kubernetes</title>
       <link>https://jypark0.github.io/tags/kubernetes/</link>
       <pubDate>Mon, 20 Aug 2018 21:06:15 +0900</pubDate>
       
@@ -49,7 +48,7 @@
     </item>
     
     <item>
-      <title>Minikube</title>
+      <title>minikube</title>
       <link>https://jypark0.github.io/tags/minikube/</link>
       <pubDate>Sun, 29 Jul 2018 15:36:23 +0900</pubDate>
       
@@ -58,7 +57,7 @@
     </item>
     
     <item>
-      <title>Proxy</title>
+      <title>proxy</title>
       <link>https://jypark0.github.io/tags/proxy/</link>
       <pubDate>Sun, 29 Jul 2018 15:36:23 +0900</pubDate>
       
@@ -67,7 +66,7 @@
     </item>
     
     <item>
-      <title>Semiconductor</title>
+      <title>semiconductor</title>
       <link>https://jypark0.github.io/tags/semiconductor/</link>
       <pubDate>Fri, 15 Sep 2017 00:00:00 +0000</pubDate>
       
