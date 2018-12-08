@@ -19,7 +19,7 @@
       
       <guid>https://jypark0.github.io/home/about/</guid>
       <description>Biography I am a software engineer at Samsung Electronics, DS division. I graduated from KAIST with the M.S and B.S. degrees in Industrial Systems Engineering. During my M.S., I researched prediction models for complex semiconductor tools and focused on the tradeoff between accuracy and computation. I developed a new prediction model that is accurate and robust, with little extra computational complexity.
-At Samsung, I develop libraries and components for our big data analytics platform, to analyze semiconductor manufacturing data in order to improve yields.</description>
+At Samsung, I develop libraries and components for our big data analytics platform to enable the analysis of semiconductor manufacturing data to improve yields.</description>
     </item>
     
     <item>
@@ -37,6 +37,15 @@ At Samsung, I develop libraries and components for our big data analytics platfo
       <pubDate>Wed, 20 Apr 2016 00:00:00 +0900</pubDate>
       
       <guid>https://jypark0.github.io/home/talks/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Projects</title>
+      <link>https://jypark0.github.io/home/projects/</link>
+      <pubDate>Wed, 20 Apr 2016 00:00:00 +0900</pubDate>
+      
+      <guid>https://jypark0.github.io/home/projects/</guid>
       <description></description>
     </item>
     

@@ -7,15 +7,15 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2018</copyright>
-    <lastBuildDate>Mon, 20 Aug 2018 21:06:15 +0900</lastBuildDate>
+    <lastBuildDate>Sun, 20 May 2018 21:06:15 +0900</lastBuildDate>
     
 	<atom:link href="https://jypark0.github.io/tags/kubeadm/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Kubeadm Init</title>
+      <title>3. Kubeadm Init</title>
       <link>https://jypark0.github.io/post/kubeadm-init/</link>
-      <pubDate>Mon, 20 Aug 2018 21:06:15 +0900</pubDate>
+      <pubDate>Sun, 20 May 2018 21:06:15 +0900</pubDate>
       
       <guid>https://jypark0.github.io/post/kubeadm-init/</guid>
       <description>This is the last of three posts will focus on how to bring up a kubeadm cluster in an air-gapped environment.
@@ -27,7 +27,7 @@ You should have:
     <item>
       <title>2. Required images for kubeadm</title>
       <link>https://jypark0.github.io/post/internet-download/</link>
-      <pubDate>Mon, 13 Aug 2018 20:43:15 +0900</pubDate>
+      <pubDate>Sun, 13 May 2018 20:43:15 +0900</pubDate>
       
       <guid>https://jypark0.github.io/post/internet-download/</guid>
       <description>This is the second of three posts will focus on how to bring up a kubeadm cluster in an offline environment. Refer to the first post for information on how to set up k8s nodes and to install kubeadm.
@@ -37,7 +37,7 @@ You should have:
     <item>
       <title>1. Prepare offline kubeadm install</title>
       <link>https://jypark0.github.io/post/prepare-for-kubernetes/</link>
-      <pubDate>Mon, 06 Aug 2018 22:15:26 +0900</pubDate>
+      <pubDate>Sun, 06 May 2018 22:15:26 +0900</pubDate>
       
       <guid>https://jypark0.github.io/post/prepare-for-kubernetes/</guid>
       <description>This is the first of three posts will focus on how to bring up a kubeadm cluster in an offline environment. I completed this a couple of months ago, when the latest k8s version was 1.9, but the concepts should translate over to newer versions.

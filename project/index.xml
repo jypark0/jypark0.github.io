@@ -7,19 +7,18 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2018</copyright>
-    <lastBuildDate>Sun, 29 Jul 2018 15:41:26 +0900</lastBuildDate>
+    <lastBuildDate>Sat, 06 Feb 2016 22:11:20 +0900</lastBuildDate>
     
 	<atom:link href="https://jypark0.github.io/project/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Kubernetes</title>
-      <link>https://jypark0.github.io/project/kubernetes/</link>
-      <pubDate>Sun, 29 Jul 2018 15:41:26 +0900</pubDate>
+      <title>CPTs</title>
+      <link>https://jypark0.github.io/project/cpts/</link>
+      <pubDate>Sat, 06 Feb 2016 22:11:20 +0900</pubDate>
       
-      <guid>https://jypark0.github.io/project/kubernetes/</guid>
-      <description>Kubernetes is a container orchestration platform, designed to run containerized workloads in production. Originally, an internal project at Google, Kubernetes (k8s) was donated to CNCF in 2014 and has since become one of the most popular platforms for running containers.
-Real applications often consist of multiple containers, spread across multiple nodes. Kubernetes gives you a way to manage these containers and deploy them to the end users. Some of its features include:</description>
+      <guid>https://jypark0.github.io/project/cpts/</guid>
+      <description>Semiconductor wafers are processed at fabs with many different types of semiconductor tools, and may undergo several thousand process steps before they are packaged into the final product. Clustered photolithography tools (CPTs) are one of the most complex and expensive types of semiconductor equipment, where a single such tool may cost hundreds of millions of dollars. As such, CPTs are typically the fabricator bottleneck and contribute significantly to the fab cycle time.</description>
     </item>
     
   </channel>

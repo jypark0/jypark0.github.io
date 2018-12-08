@@ -5,7 +5,7 @@
     <url>
     
       <loc>https://jypark0.github.io/post/kubeadm-init/</loc>
-      <lastmod>2018-08-20T21:06:15+09:00</lastmod>
+      <lastmod>2018-05-20T21:06:15+09:00</lastmod>
     </url>
     
   
@@ -13,7 +13,7 @@
     <url>
     
       <loc>https://jypark0.github.io/post/internet-download/</loc>
-      <lastmod>2018-08-13T20:43:15+09:00</lastmod>
+      <lastmod>2018-05-13T20:43:15+09:00</lastmod>
     </url>
     
   
@@ -21,7 +21,7 @@
     <url>
     
       <loc>https://jypark0.github.io/post/prepare-for-kubernetes/</loc>
-      <lastmod>2018-08-06T22:15:26+09:00</lastmod>
+      <lastmod>2018-05-06T22:15:26+09:00</lastmod>
     </url>
     
   
@@ -29,7 +29,7 @@
     <url>
     
       <loc>https://jypark0.github.io/post/minikube-proxy/</loc>
-      <lastmod>2018-07-29T15:36:23+09:00</lastmod>
+      <lastmod>2018-01-29T15:36:23+09:00</lastmod>
     </url>
     
   
@@ -76,6 +76,14 @@
     
     <url>
     
+      <loc>https://jypark0.github.io/project/cpts/</loc>
+      <lastmod>2016-02-06T22:11:20+09:00</lastmod>
+    </url>
+    
+  
+    
+    <url>
+    
       <loc>https://jypark0.github.io/talk/2015-ismi/</loc>
       <lastmod>2015-10-17T00:00:00+00:00</lastmod>
     </url>
@@ -103,6 +111,15 @@
     
       <loc>https://jypark0.github.io/</loc>
       <lastmod>2016-04-20T00:00:00+09:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    <url>
+    
+      <loc>https://jypark0.github.io/project/</loc>
+      <lastmod>2016-02-06T22:11:20+09:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -146,7 +163,7 @@
     <url>
     
       <loc>https://jypark0.github.io/tags/kubeadm/</loc>
-      <lastmod>2018-08-20T21:06:15+09:00</lastmod>
+      <lastmod>2018-05-20T21:06:15+09:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -155,7 +172,7 @@
     <url>
     
       <loc>https://jypark0.github.io/categories/kubeadm/</loc>
-      <lastmod>2018-08-20T21:06:15+09:00</lastmod>
+      <lastmod>2018-05-20T21:06:15+09:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -164,7 +181,7 @@
     <url>
     
       <loc>https://jypark0.github.io/tags/kubernetes/</loc>
-      <lastmod>2018-08-20T21:06:15+09:00</lastmod>
+      <lastmod>2018-05-20T21:06:15+09:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -173,7 +190,7 @@
     <url>
     
       <loc>https://jypark0.github.io/categories/kubernetes/</loc>
-      <lastmod>2018-08-20T21:06:15+09:00</lastmod>
+      <lastmod>2018-05-20T21:06:15+09:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -182,7 +199,7 @@
     <url>
     
       <loc>https://jypark0.github.io/tags/minikube/</loc>
-      <lastmod>2018-07-29T15:36:23+09:00</lastmod>
+      <lastmod>2018-01-29T15:36:23+09:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -191,7 +208,7 @@
     <url>
     
       <loc>https://jypark0.github.io/categories/minikube/</loc>
-      <lastmod>2018-07-29T15:36:23+09:00</lastmod>
+      <lastmod>2018-01-29T15:36:23+09:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -200,7 +217,7 @@
     <url>
     
       <loc>https://jypark0.github.io/tags/proxy/</loc>
-      <lastmod>2018-07-29T15:36:23+09:00</lastmod>
+      <lastmod>2018-01-29T15:36:23+09:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -209,7 +226,7 @@
     <url>
     
       <loc>https://jypark0.github.io/categories/proxy/</loc>
-      <lastmod>2018-07-29T15:36:23+09:00</lastmod>
+      <lastmod>2018-01-29T15:36:23+09:00</lastmod>
       <priority>0</priority>
     </url>
     

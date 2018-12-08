@@ -11,9 +11,9 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>Kubeadm Init</title>
+      <title>3. Kubeadm Init</title>
       <link>https://jypark0.github.io/post/kubeadm-init/</link>
-      <pubDate>Mon, 20 Aug 2018 21:06:15 +0900</pubDate>
+      <pubDate>Sun, 20 May 2018 21:06:15 +0900</pubDate>
       
       <guid>https://jypark0.github.io/post/kubeadm-init/</guid>
       <description>
@@ -234,7 +234,7 @@ kubeadm token list
     <item>
       <title>2. Required images for kubeadm</title>
       <link>https://jypark0.github.io/post/internet-download/</link>
-      <pubDate>Mon, 13 Aug 2018 20:43:15 +0900</pubDate>
+      <pubDate>Sun, 13 May 2018 20:43:15 +0900</pubDate>
       
       <guid>https://jypark0.github.io/post/internet-download/</guid>
       <description>
@@ -469,7 +469,7 @@ for image in image_list:
     <item>
       <title>1. Prepare offline kubeadm install</title>
       <link>https://jypark0.github.io/post/prepare-for-kubernetes/</link>
-      <pubDate>Mon, 06 Aug 2018 22:15:26 +0900</pubDate>
+      <pubDate>Sun, 06 May 2018 22:15:26 +0900</pubDate>
       
       <guid>https://jypark0.github.io/post/prepare-for-kubernetes/</guid>
       <description>
@@ -491,7 +491,15 @@ There are many different ways to &lt;a href=&#34;https://kubernetes.io/docs/setu
 
 &lt;p&gt;For reference, here is the simplified Kubernetes architecture (from &lt;a href=&#34;https://commons.wikimedia.org/wiki/File:Kubernetes.png#/media/File:Kubernetes.png&#34; target=&#34;_blank&#34;&gt;Wikipedia&lt;/a&gt;)&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://jypark0.github.io/img/posts/k8s-architecture.png&#34; alt=&#34;Kubernetes Architecture&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;
+
+
+&lt;figure&gt;
+
+&lt;img src=&#34;k8s-architecture.png&#34; /&gt;
+
+
+&lt;/figure&gt;&#34; alt=&#34;Kubernetes Architecture&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Note: In this guide, we will use &lt;code&gt;root&lt;/code&gt; for all commands unless explicitly stated.&lt;/p&gt;
 
@@ -520,7 +528,15 @@ There are many different ways to &lt;a href=&#34;https://kubernetes.io/docs/setu
 
 &lt;p&gt;The master and workers will have the same specs.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://jypark0.github.io/img/posts/k8s-nodes.jpg&#34; alt=&#34;Kubernetes Nodes&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;
+
+
+&lt;figure&gt;
+
+&lt;img src=&#34;k8s-nodes.jpg&#34; /&gt;
+
+
+&lt;/figure&gt;&#34; alt=&#34;Kubernetes Nodes&#34; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&#34;1-2-private-repositories&#34;&gt;1.2 Private repositories&lt;/h3&gt;
 
@@ -730,7 +746,7 @@ EOF
     <item>
       <title>Setting up Minikube with corporate proxy</title>
       <link>https://jypark0.github.io/post/minikube-proxy/</link>
-      <pubDate>Sun, 29 Jul 2018 15:36:23 +0900</pubDate>
+      <pubDate>Mon, 29 Jan 2018 15:36:23 +0900</pubDate>
       
       <guid>https://jypark0.github.io/post/minikube-proxy/</guid>
       <description>
@@ -767,7 +783,15 @@ EOF
 &lt;li&gt;System Settings -&amp;gt; Network Settings&lt;/li&gt;
 &lt;li&gt;Enter &lt;proxy-ip&gt;:&lt;port&gt;&lt;/li&gt;
 &lt;li&gt;May need to add https proxy as well
-&lt;img src=&#34;https://jypark0.github.io/img/posts/minikube1.png&#34; alt=&#34;Ubuntu Proxy&#34; /&gt;&lt;/li&gt;
+&lt;img src=&#34;
+
+
+&lt;figure&gt;
+
+&lt;img src=&#34;minikube1.png&#34; /&gt;
+
+
+&lt;/figure&gt;&#34; alt=&#34;Ubuntu Proxy&#34; /&gt;&lt;/li&gt;
 &lt;li&gt;Click apply system-wide&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
 
@@ -883,6 +907,31 @@ EOF
       
       <guid>https://jypark0.github.io/publication/2016-j2/</guid>
       <description></description>
+    </item>
+    
+    <item>
+      <title>CPTs</title>
+      <link>https://jypark0.github.io/project/cpts/</link>
+      <pubDate>Sat, 06 Feb 2016 22:11:20 +0900</pubDate>
+      
+      <guid>https://jypark0.github.io/project/cpts/</guid>
+      <description>&lt;p&gt;Semiconductor wafers are processed at fabs with many different types of semiconductor tools, and may undergo several thousand process steps before they are packaged into the final product. Clustered photolithography tools (CPTs) are one of the most complex and expensive types of semiconductor equipment, where a single such tool may cost hundreds of millions of dollars. As such, CPTs are typically the fabricator bottleneck and contribute significantly to the fab cycle time.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;
+
+
+&lt;figure&gt;
+
+&lt;img src=&#34;cpt_layout.png&#34; /&gt;
+
+
+&lt;/figure&gt;&#34; alt=&#34;CPT&#34; /&gt;
+In a single CPT, there are many processing modules and wafers are carried to and from modules by robot arms. In the above configuration, there are four clusters, each with a single-arm robot. Each wafer recipe has its own process flows within a CPT, and setups may be required when changing to another process flow.&lt;/p&gt;
+
+&lt;p&gt;There are many ways to model CPTs, ranging from simple linear regression models, to more complex queuing models (called flow lines), all the way to full discrete event simulation models. Each of these models have their pros and cons, and one must consider the performance-computation tradeoff when embedding these equipment models into a full fab simulation.&lt;/p&gt;
+
+&lt;p&gt;In &lt;a href=&#34;https://jypark0.github.io/publication/2017-j1/&#34; target=&#34;_blank&#34;&gt;J1&lt;/a&gt;, I explored how to apply such models to CPTs, developing extensions to certain models, and performed a comprehensive comparison of affine models and flow lines with respect to accuracy and computation and robustness to mismatched distributions. In &lt;a href=&#34;https://jypark0.github.io/publication/2016-j2/&#34; target=&#34;_blank&#34;&gt;J2&lt;/a&gt;, I developed a new class of models (ERMs) that considers the available level of data resolution in the training data, and uses the concept of contention at the bottleneck. ERMs were shown to rival the accuracy of flow line models, while requiring approximately 250 times less computation.&lt;/p&gt;
+</description>
     </item>
     
     <item>

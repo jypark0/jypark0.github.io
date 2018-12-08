@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2018</copyright>
-    <lastBuildDate>Sun, 29 Jul 2018 15:36:23 +0900</lastBuildDate>
+    <lastBuildDate>Mon, 29 Jan 2018 15:36:23 +0900</lastBuildDate>
     
 	<atom:link href="https://jypark0.github.io/categories/minikube/index.xml" rel="self" type="application/rss+xml" />
     
@@ -15,7 +15,7 @@
     <item>
       <title>Setting up Minikube with corporate proxy</title>
       <link>https://jypark0.github.io/post/minikube-proxy/</link>
-      <pubDate>Sun, 29 Jul 2018 15:36:23 +0900</pubDate>
+      <pubDate>Mon, 29 Jan 2018 15:36:23 +0900</pubDate>
       
       <guid>https://jypark0.github.io/post/minikube-proxy/</guid>
       <description>Minikube is an easy way to get started with Kubernetes. It runs as a single-node Kubernetes cluster inside a VM, and includes almost all features of k8s, so you can try them out before installing them to an actual cluster.
