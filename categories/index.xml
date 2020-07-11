@@ -1,51 +1,16 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Categories on Jung Yeon Park</title>
+    <title>Categories | Jung Yeon Park</title>
     <link>https://jypark0.github.io/categories/</link>
-    <description>Recent content in Categories on Jung Yeon Park</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <copyright>&amp;copy; 2018</copyright>
-    
-	<atom:link href="https://jypark0.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>kubeadm</title>
-      <link>https://jypark0.github.io/categories/kubeadm/</link>
-      <pubDate>Sun, 20 May 2018 21:06:15 +0900</pubDate>
-      
-      <guid>https://jypark0.github.io/categories/kubeadm/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>kubernetes</title>
-      <link>https://jypark0.github.io/categories/kubernetes/</link>
-      <pubDate>Sun, 20 May 2018 21:06:15 +0900</pubDate>
-      
-      <guid>https://jypark0.github.io/categories/kubernetes/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>minikube</title>
-      <link>https://jypark0.github.io/categories/minikube/</link>
-      <pubDate>Mon, 29 Jan 2018 15:36:23 +0900</pubDate>
-      
-      <guid>https://jypark0.github.io/categories/minikube/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>proxy</title>
-      <link>https://jypark0.github.io/categories/proxy/</link>
-      <pubDate>Mon, 29 Jan 2018 15:36:23 +0900</pubDate>
-      
-      <guid>https://jypark0.github.io/categories/proxy/</guid>
-      <description></description>
-    </item>
+      <atom:link href="https://jypark0.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <description>Categories</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2018 Jung Yeon Park</copyright>
+    <image>
+      <url>img/map[gravatar:%!s(bool=false) shape:circle]</url>
+      <title>Categories</title>
+      <link>https://jypark0.github.io/categories/</link>
+    </image>
     
   </channel>
 </rss>

@@ -1,243 +1,326 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
-    
-    <url>
-    
-      <loc>https://jypark0.github.io/post/kubeadm-init/</loc>
-      <lastmod>2018-05-20T21:06:15+09:00</lastmod>
-    </url>
-    
+  <url>
+    <loc>https://jypark0.github.io/author/jung-yeon-park/</loc>
+    <lastmod>2020-07-01T00:00:00+00:00</lastmod>
+  </url>
   
-    
-    <url>
-    
-      <loc>https://jypark0.github.io/post/internet-download/</loc>
-      <lastmod>2018-05-13T20:43:15+09:00</lastmod>
-    </url>
-    
+  <url>
+    <loc>https://jypark0.github.io/publication-type/1/</loc>
+    <lastmod>2020-07-01T00:00:00+00:00</lastmod>
+  </url>
   
-    
-    <url>
-    
-      <loc>https://jypark0.github.io/post/prepare-for-kubernetes/</loc>
-      <lastmod>2018-05-06T22:15:26+09:00</lastmod>
-    </url>
-    
+  <url>
+    <loc>https://jypark0.github.io/authors/</loc>
+    <lastmod>2020-07-01T00:00:00+00:00</lastmod>
+  </url>
   
-    
-    <url>
-    
-      <loc>https://jypark0.github.io/post/minikube-proxy/</loc>
-      <lastmod>2018-01-29T15:36:23+09:00</lastmod>
-    </url>
-    
+  <url>
+    <loc>https://jypark0.github.io/tag/computer-science-machine-learning/</loc>
+    <lastmod>2020-07-01T00:00:00+00:00</lastmod>
+  </url>
   
-    
-    <url>
-    
-      <loc>https://jypark0.github.io/publication/2017-j1/</loc>
-      <lastmod>2017-09-15T00:00:00+00:00</lastmod>
-    </url>
-    
+  <url>
+    <loc>https://jypark0.github.io/</loc>
+    <lastmod>2020-07-01T00:00:00+00:00</lastmod>
+  </url>
   
-    
-    <url>
-    
-      <loc>https://jypark0.github.io/post/</loc>
-      <lastmod>2017-01-01T00:00:00+09:00</lastmod>
-    </url>
-    
+  <url>
+    <loc>https://jypark0.github.io/author/kenneth-theo-carr/</loc>
+    <lastmod>2020-07-01T00:00:00+00:00</lastmod>
+  </url>
   
-    
-    <url>
-    
-      <loc>https://jypark0.github.io/publication/</loc>
-      <lastmod>2017-01-01T00:00:00+09:00</lastmod>
-    </url>
-    
+  <url>
+    <loc>https://jypark0.github.io/publication/park-multiresolution-2020/</loc>
+    <lastmod>2020-07-01T00:00:00+00:00</lastmod>
+  </url>
   
-    
-    <url>
-    
-      <loc>https://jypark0.github.io/talk/</loc>
-      <lastmod>2017-01-01T00:00:00+09:00</lastmod>
-    </url>
-    
+  <url>
+    <loc>https://jypark0.github.io/publication_types/</loc>
+    <lastmod>2020-07-01T00:00:00+00:00</lastmod>
+  </url>
   
-    
-    <url>
-    
-      <loc>https://jypark0.github.io/publication/2016-j2/</loc>
-      <lastmod>2016-10-21T00:00:00+00:00</lastmod>
-    </url>
-    
+  <url>
+    <loc>https://jypark0.github.io/publication/</loc>
+    <lastmod>2020-07-01T00:00:00+00:00</lastmod>
+  </url>
   
-    
-    <url>
-    
-      <loc>https://jypark0.github.io/project/cpts/</loc>
-      <lastmod>2016-02-06T22:11:20+09:00</lastmod>
-    </url>
-    
+  <url>
+    <loc>https://jypark0.github.io/author/rose-yu/</loc>
+    <lastmod>2020-07-01T00:00:00+00:00</lastmod>
+  </url>
   
-    
-    <url>
-    
-      <loc>https://jypark0.github.io/talk/2015-ismi/</loc>
-      <lastmod>2015-10-17T00:00:00+00:00</lastmod>
-    </url>
-    
+  <url>
+    <loc>https://jypark0.github.io/tag/statistics-machine-learning/</loc>
+    <lastmod>2020-07-01T00:00:00+00:00</lastmod>
+  </url>
   
-    
-    <url>
-    
-      <loc>https://jypark0.github.io/publication_types/2/</loc>
-      <lastmod>2017-09-15T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
+  <url>
+    <loc>https://jypark0.github.io/author/stephan-zheng/</loc>
+    <lastmod>2020-07-01T00:00:00+00:00</lastmod>
+  </url>
   
-    
-    <url>
-    
-      <loc>https://jypark0.github.io/categories/</loc>
-      <priority>0</priority>
-    </url>
-    
+  <url>
+    <loc>https://jypark0.github.io/tags/</loc>
+    <lastmod>2020-07-01T00:00:00+00:00</lastmod>
+  </url>
   
-    
-    <url>
-    
-      <loc>https://jypark0.github.io/</loc>
-      <lastmod>2016-04-20T00:00:00+09:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
+  <url>
+    <loc>https://jypark0.github.io/author/yisong-yue/</loc>
+    <lastmod>2020-07-01T00:00:00+00:00</lastmod>
+  </url>
   
-    
-    <url>
-    
-      <loc>https://jypark0.github.io/project/</loc>
-      <lastmod>2016-02-06T22:11:20+09:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
+  <url>
+    <loc>https://jypark0.github.io/author/hyeong-ook-kim/</loc>
+    <lastmod>2019-12-01T00:00:00+00:00</lastmod>
+  </url>
   
-    
-    <url>
-    
-      <loc>https://jypark0.github.io/publication_types/</loc>
-      <lastmod>2017-09-15T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
+  <url>
+    <loc>https://jypark0.github.io/author/james-r.-morrison/</loc>
+    <lastmod>2019-12-01T00:00:00+00:00</lastmod>
+  </url>
   
-    
-    <url>
-    
-      <loc>https://jypark0.github.io/tags/</loc>
-      <priority>0</priority>
-    </url>
-    
+  <url>
+    <loc>https://jypark0.github.io/publication/kim-consequences-2019/</loc>
+    <lastmod>2019-12-01T00:00:00+00:00</lastmod>
+  </url>
   
-    
-    <url>
-    
-      <loc>https://jypark0.github.io/tags/computational-tradeoff/</loc>
-      <lastmod>2017-09-15T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
+  <url>
+    <loc>https://jypark0.github.io/author/se-hyeon-park/</loc>
+    <lastmod>2019-12-01T00:00:00+00:00</lastmod>
+  </url>
   
-    
-    <url>
-    
-      <loc>https://jypark0.github.io/tags/equipment-models/</loc>
-      <lastmod>2017-09-15T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
+  <url>
+    <loc>https://jypark0.github.io/publication-type/8/</loc>
+    <lastmod>2018-07-31T00:00:00+00:00</lastmod>
+  </url>
   
-    
-    <url>
-    
-      <loc>https://jypark0.github.io/tags/kubeadm/</loc>
-      <lastmod>2018-05-20T21:06:15+09:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
+  <url>
+    <loc>https://jypark0.github.io/publication/patent-erm-2018/</loc>
+    <lastmod>2018-07-31T00:00:00+00:00</lastmod>
+  </url>
   
-    
-    <url>
-    
-      <loc>https://jypark0.github.io/categories/kubeadm/</loc>
-      <lastmod>2018-05-20T21:06:15+09:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
+  <url>
+    <loc>https://jypark0.github.io/author/kyungsu-park/</loc>
+    <lastmod>2018-07-31T00:00:00+00:00</lastmod>
+  </url>
   
-    
-    <url>
-    
-      <loc>https://jypark0.github.io/tags/kubernetes/</loc>
-      <lastmod>2018-05-20T21:06:15+09:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
+  <url>
+    <loc>https://jypark0.github.io/author/sang-yoon-bae/</loc>
+    <lastmod>2018-07-31T00:00:00+00:00</lastmod>
+  </url>
   
-    
-    <url>
-    
-      <loc>https://jypark0.github.io/categories/kubernetes/</loc>
-      <lastmod>2018-05-20T21:06:15+09:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
+  <url>
+    <loc>https://jypark0.github.io/publication/patent-models-2018/</loc>
+    <lastmod>2018-06-05T00:00:00+00:00</lastmod>
+  </url>
   
-    
-    <url>
-    
-      <loc>https://jypark0.github.io/tags/minikube/</loc>
-      <lastmod>2018-01-29T15:36:23+09:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
+  <url>
+    <loc>https://jypark0.github.io/publication-type/2/</loc>
+    <lastmod>2017-11-01T00:00:00+00:00</lastmod>
+  </url>
   
-    
-    <url>
-    
-      <loc>https://jypark0.github.io/categories/minikube/</loc>
-      <lastmod>2018-01-29T15:36:23+09:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
+  <url>
+    <loc>https://jypark0.github.io/tag/affine-models/</loc>
+    <lastmod>2017-11-01T00:00:00+00:00</lastmod>
+  </url>
   
-    
-    <url>
-    
-      <loc>https://jypark0.github.io/tags/proxy/</loc>
-      <lastmod>2018-01-29T15:36:23+09:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
+  <url>
+    <loc>https://jypark0.github.io/tag/clustered-photolithography-tool/</loc>
+    <lastmod>2017-11-01T00:00:00+00:00</lastmod>
+  </url>
   
-    
-    <url>
-    
-      <loc>https://jypark0.github.io/categories/proxy/</loc>
-      <lastmod>2018-01-29T15:36:23+09:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
+  <url>
+    <loc>https://jypark0.github.io/tag/clustered-photolithography-tools/</loc>
+    <lastmod>2017-11-01T00:00:00+00:00</lastmod>
+  </url>
   
-    
-    <url>
-    
-      <loc>https://jypark0.github.io/tags/semiconductor/</loc>
-      <lastmod>2017-09-15T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
+  <url>
+    <loc>https://jypark0.github.io/tag/computational-modeling/</loc>
+    <lastmod>2017-11-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jypark0.github.io/tag/discrete-event-simulation/</loc>
+    <lastmod>2017-11-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jypark0.github.io/tag/fab-level-discrete-event-simulation/</loc>
+    <lastmod>2017-11-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jypark0.github.io/tag/fab-level-simulation/</loc>
+    <lastmod>2017-11-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jypark0.github.io/tag/flow-line/</loc>
+    <lastmod>2017-11-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jypark0.github.io/tag/lithography/</loc>
+    <lastmod>2017-11-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jypark0.github.io/publication/park-models-2017/</loc>
+    <lastmod>2017-11-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jypark0.github.io/tag/photolithography/</loc>
+    <lastmod>2017-11-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jypark0.github.io/tag/production-equipment/</loc>
+    <lastmod>2017-11-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jypark0.github.io/tag/robots/</loc>
+    <lastmod>2017-11-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jypark0.github.io/tag/semiconductor-device-manufacture/</loc>
+    <lastmod>2017-11-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jypark0.github.io/tag/semiconductor-device-modeling/</loc>
+    <lastmod>2017-11-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jypark0.github.io/tag/semiconductor-wafer-fabricators/</loc>
+    <lastmod>2017-11-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jypark0.github.io/tag/simulation/</loc>
+    <lastmod>2017-11-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jypark0.github.io/tag/throughput-and-cycle-time-models/</loc>
+    <lastmod>2017-11-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jypark0.github.io/tag/affine-model/</loc>
+    <lastmod>2017-02-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jypark0.github.io/tag/cpt-model/</loc>
+    <lastmod>2017-02-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jypark0.github.io/tag/cycle-time/</loc>
+    <lastmod>2017-02-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jypark0.github.io/tag/data-models/</loc>
+    <lastmod>2017-02-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jypark0.github.io/tag/empirical-flow-line-model/</loc>
+    <lastmod>2017-02-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jypark0.github.io/tag/erm/</loc>
+    <lastmod>2017-02-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jypark0.github.io/tag/exit-recursion-models/</loc>
+    <lastmod>2017-02-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jypark0.github.io/publication/park-exit-2017/</loc>
+    <lastmod>2017-02-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jypark0.github.io/tag/flow-line-theory/</loc>
+    <lastmod>2017-02-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jypark0.github.io/tag/lot-log/</loc>
+    <lastmod>2017-02-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jypark0.github.io/tag/lot-residency-time/</loc>
+    <lastmod>2017-02-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jypark0.github.io/tag/mathematical-model/</loc>
+    <lastmod>2017-02-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jypark0.github.io/tag/mean-cycle-time/</loc>
+    <lastmod>2017-02-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jypark0.github.io/tag/numerical-models/</loc>
+    <lastmod>2017-02-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jypark0.github.io/tag/recursion-method/</loc>
+    <lastmod>2017-02-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jypark0.github.io/tag/semiconductor-technology/</loc>
+    <lastmod>2017-02-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jypark0.github.io/tag/throughput/</loc>
+    <lastmod>2017-02-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jypark0.github.io/tag/tool-log/</loc>
+    <lastmod>2017-02-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jypark0.github.io/tag/wafer-log/</loc>
+    <lastmod>2017-02-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jypark0.github.io/categories/</loc>
+  </url>
+  
+  <url>
+    <loc>https://jypark0.github.io/author/jung-yeon-park/</loc>
+  </url>
+  
+  <url>
+    <loc>https://jypark0.github.io/post/</loc>
+  </url>
+  
+  <url>
+    <loc>https://jypark0.github.io/talk/</loc>
+  </url>
   
 </urlset>

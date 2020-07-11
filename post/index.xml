@@ -1,61 +1,16 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on Jung Yeon Park</title>
+    <title>Posts | Jung Yeon Park</title>
     <link>https://jypark0.github.io/post/</link>
-    <description>Recent content in Posts on Jung Yeon Park</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <copyright>&amp;copy; 2018</copyright>
-    <lastBuildDate>Sun, 01 Jan 2017 00:00:00 +0900</lastBuildDate>
-    
-	<atom:link href="https://jypark0.github.io/post/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>3. Kubeadm Init</title>
-      <link>https://jypark0.github.io/post/kubeadm-init/</link>
-      <pubDate>Sun, 20 May 2018 21:06:15 +0900</pubDate>
-      
-      <guid>https://jypark0.github.io/post/kubeadm-init/</guid>
-      <description>This is the last of three posts will focus on how to bring up a kubeadm cluster in an air-gapped environment.
- Prepare for kubernetes Download required images for kubeadm Initialize Kubeadm [*]  This post focuses on initializing kubeadm, install overlay networking, and join nodes to the initialized cluster.
-You should have:
- Five VMs (1 for master, 4 for workers) and prepared them for a kubeadm install Downloaded the required docker images Uploaded the images to a private repository  Please refer to the first for information on how to set up k8s nodes and the second to download required images from the internet.</description>
-    </item>
-    
-    <item>
-      <title>2. Required images for kubeadm</title>
-      <link>https://jypark0.github.io/post/internet-download/</link>
-      <pubDate>Sun, 13 May 2018 20:43:15 +0900</pubDate>
-      
-      <guid>https://jypark0.github.io/post/internet-download/</guid>
-      <description>This is the second of three posts will focus on how to bring up a kubeadm cluster in an offline environment. Refer to the first post for information on how to set up k8s nodes and to install kubeadm.
- Prepare for kubernetes Download required images for kubeadm [*] Initialize Kubeadm  This post focuses on the required Docker images for kubeadm and downloading/uploading them to our private registry.</description>
-    </item>
-    
-    <item>
-      <title>1. Prepare offline kubeadm install</title>
-      <link>https://jypark0.github.io/post/prepare-for-kubernetes/</link>
-      <pubDate>Sun, 06 May 2018 22:15:26 +0900</pubDate>
-      
-      <guid>https://jypark0.github.io/post/prepare-for-kubernetes/</guid>
-      <description>This is the first of three posts will focus on how to bring up a kubeadm cluster in an offline environment. I completed this a couple of months ago, when the latest k8s version was 1.9, but the concepts should translate over to newer versions.
- Prepare for kubernetes [*] Download required images for kubeadm Initialize Kubeadm  Kubeadm is one of the tools used to create a Kubernetes cluster.</description>
-    </item>
-    
-    <item>
-      <title>Setting up Minikube with corporate proxy</title>
-      <link>https://jypark0.github.io/post/minikube-proxy/</link>
-      <pubDate>Mon, 29 Jan 2018 15:36:23 +0900</pubDate>
-      
-      <guid>https://jypark0.github.io/post/minikube-proxy/</guid>
-      <description>Minikube is an easy way to get started with Kubernetes. It runs as a single-node Kubernetes cluster inside a VM, and includes almost all features of k8s, so you can try them out before installing them to an actual cluster.
-Supported addons include:
- Kubernetes dashboard EFK Registry Ingress  and so on.
-(see https://github.com/kubernetes/minikube/blob/master/docs/addons.md)
-Minikube creates a VM that includes Kubernetes and a Docker daemon. To use containers inside this VM, you need to pass on the proxy settings to the docker daemon and install the certificate as well.</description>
-    </item>
+      <atom:link href="https://jypark0.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <description>Posts</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2018 Jung Yeon Park</copyright>
+    <image>
+      <url>img/map[gravatar:%!s(bool=false) shape:circle]</url>
+      <title>Posts</title>
+      <link>https://jypark0.github.io/post/</link>
+    </image>
     
   </channel>
 </rss>

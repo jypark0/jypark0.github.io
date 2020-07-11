@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Se-Hyeon Park | Jung Yeon Park</title>
+    <link>https://jypark0.github.io/author/se-hyeon-park/</link>
+      <atom:link href="https://jypark0.github.io/author/se-hyeon-park/index.xml" rel="self" type="application/rss+xml" />
+    <description>Se-Hyeon Park</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2018 Jung Yeon Park</copyright><lastBuildDate>Sun, 01 Dec 2019 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>img/map[gravatar:%!s(bool=false) shape:circle]</url>
+      <title>Se-Hyeon Park</title>
+      <link>https://jypark0.github.io/author/se-hyeon-park/</link>
+    </image>
+    
+    <item>
+      <title>On the Consequences of Un-Modeled Dynamics to the Optimality of Schedules in Clustered Photolithography Tools</title>
+      <link>https://jypark0.github.io/publication/kim-consequences-2019/</link>
+      <pubDate>Sun, 01 Dec 2019 00:00:00 +0000</pubDate>
+      <guid>https://jypark0.github.io/publication/kim-consequences-2019/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

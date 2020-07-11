@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>**Jung Yeon Park** | Jung Yeon Park</title>
+    <link>https://jypark0.github.io/author/jung-yeon-park/</link>
+      <atom:link href="https://jypark0.github.io/author/jung-yeon-park/index.xml" rel="self" type="application/rss+xml" />
+    <description>**Jung Yeon Park**</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2018 Jung Yeon Park</copyright><lastBuildDate>Wed, 01 Jul 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>img/map[gravatar:%!s(bool=false) shape:circle]</url>
+      <title>**Jung Yeon Park**</title>
+      <link>https://jypark0.github.io/author/jung-yeon-park/</link>
+    </image>
+    
+    <item>
+      <title>Multiresolution Tensor Learning for Efficient and Interpretable Spatial Analysis</title>
+      <link>https://jypark0.github.io/publication/park-multiresolution-2020/</link>
+      <pubDate>Wed, 01 Jul 2020 00:00:00 +0000</pubDate>
+      <guid>https://jypark0.github.io/publication/park-multiresolution-2020/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>On the Consequences of Un-Modeled Dynamics to the Optimality of Schedules in Clustered Photolithography Tools</title>
+      <link>https://jypark0.github.io/publication/kim-consequences-2019/</link>
+      <pubDate>Sun, 01 Dec 2019 00:00:00 +0000</pubDate>
+      <guid>https://jypark0.github.io/publication/kim-consequences-2019/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Exit Recursion Models of Clustered Photolithography Tools for Fab Level Simulation</title>
+      <link>https://jypark0.github.io/publication/patent-erm-2018/</link>
+      <pubDate>Tue, 31 Jul 2018 00:00:00 +0000</pubDate>
+      <guid>https://jypark0.github.io/publication/patent-erm-2018/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Models of Photolithography Tools for Fab- Level Simulation: From Affine to Flow Line</title>
+      <link>https://jypark0.github.io/publication/patent-models-2018/</link>
+      <pubDate>Tue, 05 Jun 2018 00:00:00 +0000</pubDate>
+      <guid>https://jypark0.github.io/publication/patent-models-2018/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Models of Clustered Photolithography Tools for Fab-Level Simulation: From Affine to Flow Line</title>
+      <link>https://jypark0.github.io/publication/park-models-2017/</link>
+      <pubDate>Wed, 01 Nov 2017 00:00:00 +0000</pubDate>
+      <guid>https://jypark0.github.io/publication/park-models-2017/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Exit Recursion Models of Clustered Photolithography Tools for Fab Level Simulation</title>
+      <link>https://jypark0.github.io/publication/park-exit-2017/</link>
+      <pubDate>Wed, 01 Feb 2017 00:00:00 +0000</pubDate>
+      <guid>https://jypark0.github.io/publication/park-exit-2017/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,78 +1,16 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags on Jung Yeon Park</title>
+    <title>Tags | Jung Yeon Park</title>
     <link>https://jypark0.github.io/tags/</link>
-    <description>Recent content in Tags on Jung Yeon Park</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <copyright>&amp;copy; 2018</copyright>
-    
-	<atom:link href="https://jypark0.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>computational tradeoff</title>
-      <link>https://jypark0.github.io/tags/computational-tradeoff/</link>
-      <pubDate>Fri, 15 Sep 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://jypark0.github.io/tags/computational-tradeoff/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>equipment models</title>
-      <link>https://jypark0.github.io/tags/equipment-models/</link>
-      <pubDate>Fri, 15 Sep 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://jypark0.github.io/tags/equipment-models/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>kubeadm</title>
-      <link>https://jypark0.github.io/tags/kubeadm/</link>
-      <pubDate>Sun, 20 May 2018 21:06:15 +0900</pubDate>
-      
-      <guid>https://jypark0.github.io/tags/kubeadm/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>kubernetes</title>
-      <link>https://jypark0.github.io/tags/kubernetes/</link>
-      <pubDate>Sun, 20 May 2018 21:06:15 +0900</pubDate>
-      
-      <guid>https://jypark0.github.io/tags/kubernetes/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>minikube</title>
-      <link>https://jypark0.github.io/tags/minikube/</link>
-      <pubDate>Mon, 29 Jan 2018 15:36:23 +0900</pubDate>
-      
-      <guid>https://jypark0.github.io/tags/minikube/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>proxy</title>
-      <link>https://jypark0.github.io/tags/proxy/</link>
-      <pubDate>Mon, 29 Jan 2018 15:36:23 +0900</pubDate>
-      
-      <guid>https://jypark0.github.io/tags/proxy/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>semiconductor</title>
-      <link>https://jypark0.github.io/tags/semiconductor/</link>
-      <pubDate>Fri, 15 Sep 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://jypark0.github.io/tags/semiconductor/</guid>
-      <description></description>
-    </item>
+      <atom:link href="https://jypark0.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <description>Tags</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2018 Jung Yeon Park</copyright><lastBuildDate>Wed, 01 Jul 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>img/map[gravatar:%!s(bool=false) shape:circle]</url>
+      <title>Tags</title>
+      <link>https://jypark0.github.io/tags/</link>
+    </image>
     
   </channel>
 </rss>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>flow line | Jung Yeon Park</title>
+    <link>https://jypark0.github.io/tag/flow-line/</link>
+      <atom:link href="https://jypark0.github.io/tag/flow-line/index.xml" rel="self" type="application/rss+xml" />
+    <description>flow line</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2018 Jung Yeon Park</copyright><lastBuildDate>Wed, 01 Nov 2017 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>img/map[gravatar:%!s(bool=false) shape:circle]</url>
+      <title>flow line</title>
+      <link>https://jypark0.github.io/tag/flow-line/</link>
+    </image>
+    
+    <item>
+      <title>Models of Clustered Photolithography Tools for Fab-Level Simulation: From Affine to Flow Line</title>
+      <link>https://jypark0.github.io/publication/park-models-2017/</link>
+      <pubDate>Wed, 01 Nov 2017 00:00:00 +0000</pubDate>
+      <guid>https://jypark0.github.io/publication/park-models-2017/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
