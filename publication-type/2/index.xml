@@ -5,7 +5,7 @@
     <link>https://jypark0.github.io/publication-type/2/</link>
       <atom:link href="https://jypark0.github.io/publication-type/2/index.xml" rel="self" type="application/rss+xml" />
     <description>2</description>
-    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Wed, 01 Nov 2017 00:00:00 +0000</lastBuildDate>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><copyright>© 2022 Jung Yeon Park</copyright><lastBuildDate>Wed, 01 Nov 2017 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://jypark0.github.io/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
       <title>2</title>
@@ -14,17 +14,17 @@
     
     <item>
       <title>Models of Clustered Photolithography Tools for Fab-Level Simulation: From Affine to Flow Line</title>
-      <link>https://jypark0.github.io/publication/park-models-2017/</link>
+      <link>https://jypark0.github.io/publication/2017-tsm-models/</link>
       <pubDate>Wed, 01 Nov 2017 00:00:00 +0000</pubDate>
-      <guid>https://jypark0.github.io/publication/park-models-2017/</guid>
+      <guid>https://jypark0.github.io/publication/2017-tsm-models/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Exit Recursion Models of Clustered Photolithography Tools for Fab Level Simulation</title>
-      <link>https://jypark0.github.io/publication/park-exit-2017/</link>
+      <link>https://jypark0.github.io/publication/2017-tsm-erm/</link>
       <pubDate>Wed, 01 Feb 2017 00:00:00 +0000</pubDate>
-      <guid>https://jypark0.github.io/publication/park-exit-2017/</guid>
+      <guid>https://jypark0.github.io/publication/2017-tsm-erm/</guid>
       <description></description>
     </item>
     

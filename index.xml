@@ -5,7 +5,7 @@
     <link>https://jypark0.github.io/</link>
       <atom:link href="https://jypark0.github.io/index.xml" rel="self" type="application/rss+xml" />
     <description>Jung Yeon Park</description>
-    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Fri, 23 Oct 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><copyright>© 2022 Jung Yeon Park</copyright><lastBuildDate>Wed, 13 Jul 2022 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://jypark0.github.io/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
       <title>Jung Yeon Park</title>
@@ -13,58 +13,66 @@
     </image>
     
     <item>
+      <title>Learning Symmetric Embedding Networks for Equivariant World Models</title>
+      <link>https://jypark0.github.io/publication/2022-icml-sen/</link>
+      <pubDate>Wed, 13 Jul 2022 00:00:00 +0000</pubDate>
+      <guid>https://jypark0.github.io/publication/2022-icml-sen/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Generator Surgery for Compressed Sensing</title>
-      <link>https://jypark0.github.io/publication/park-generator-2020/</link>
+      <link>https://jypark0.github.io/publication/2020-neurips-generator/</link>
       <pubDate>Fri, 23 Oct 2020 00:00:00 +0000</pubDate>
-      <guid>https://jypark0.github.io/publication/park-generator-2020/</guid>
+      <guid>https://jypark0.github.io/publication/2020-neurips-generator/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Multiresolution Tensor Learning for Efficient and Interpretable Spatial Analysis</title>
-      <link>https://jypark0.github.io/publication/park-multiresolution-2020/</link>
+      <link>https://jypark0.github.io/publication/2020-icml-mrtl/</link>
       <pubDate>Wed, 01 Jul 2020 00:00:00 +0000</pubDate>
-      <guid>https://jypark0.github.io/publication/park-multiresolution-2020/</guid>
+      <guid>https://jypark0.github.io/publication/2020-icml-mrtl/</guid>
       <description></description>
     </item>
     
     <item>
       <title>On the Consequences of Un-Modeled Dynamics to the Optimality of Schedules in Clustered Photolithography Tools</title>
-      <link>https://jypark0.github.io/publication/kim-consequences-2019/</link>
+      <link>https://jypark0.github.io/publication/2019-wsc-consequences/</link>
       <pubDate>Sun, 01 Dec 2019 00:00:00 +0000</pubDate>
-      <guid>https://jypark0.github.io/publication/kim-consequences-2019/</guid>
+      <guid>https://jypark0.github.io/publication/2019-wsc-consequences/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Exit Recursion Models of Clustered Photolithography Tools for Fab Level Simulation</title>
-      <link>https://jypark0.github.io/publication/patent-erm-2018/</link>
+      <link>https://jypark0.github.io/publication/2018-patent-erm/</link>
       <pubDate>Tue, 31 Jul 2018 00:00:00 +0000</pubDate>
-      <guid>https://jypark0.github.io/publication/patent-erm-2018/</guid>
+      <guid>https://jypark0.github.io/publication/2018-patent-erm/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Models of Photolithography Tools for Fab- Level Simulation: From Affine to Flow Line</title>
-      <link>https://jypark0.github.io/publication/patent-models-2018/</link>
+      <link>https://jypark0.github.io/publication/2018-patent-models/</link>
       <pubDate>Tue, 05 Jun 2018 00:00:00 +0000</pubDate>
-      <guid>https://jypark0.github.io/publication/patent-models-2018/</guid>
+      <guid>https://jypark0.github.io/publication/2018-patent-models/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Models of Clustered Photolithography Tools for Fab-Level Simulation: From Affine to Flow Line</title>
-      <link>https://jypark0.github.io/publication/park-models-2017/</link>
+      <link>https://jypark0.github.io/publication/2017-tsm-models/</link>
       <pubDate>Wed, 01 Nov 2017 00:00:00 +0000</pubDate>
-      <guid>https://jypark0.github.io/publication/park-models-2017/</guid>
+      <guid>https://jypark0.github.io/publication/2017-tsm-models/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Exit Recursion Models of Clustered Photolithography Tools for Fab Level Simulation</title>
-      <link>https://jypark0.github.io/publication/park-exit-2017/</link>
+      <link>https://jypark0.github.io/publication/2017-tsm-erm/</link>
       <pubDate>Wed, 01 Feb 2017 00:00:00 +0000</pubDate>
-      <guid>https://jypark0.github.io/publication/park-exit-2017/</guid>
+      <guid>https://jypark0.github.io/publication/2017-tsm-erm/</guid>
       <description></description>
     </item>
     
